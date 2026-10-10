@@ -38,13 +38,17 @@ export const navAliases: Record<string, string> = {
 export const socials: { label: "LinkedIn" | "GitHub" | "Email"; href: string }[] = [];
 
 /**
- * Contact form delivery — configured through environment variables at build time
- * (see .env.example). Both values end up in public page source, so they must never be secrets.
- *  - endpoint: a form service URL that accepts a JSON POST (Formspree, Getform, your own API…)
- *  - email:    optional address used for the "send via your email app" fallback
+ * Contact form delivery.
+ *  - endpoint: where the form posts. Defaults to the site's own server function (api/contact.ts),
+ *    which emails the enquiry. Override with VITE_CONTACT_ENDPOINT only to use another service.
+ *    When the page is opened from disk (file://) there is no server, so the form reports that honestly.
+ *  - email: optional public address for the "send via your email app" fallback (VITE_CONTACT_EMAIL).
+ * Both values are public page content — never put a secret in a VITE_ variable.
  */
+const servedOverHttp = typeof location !== "undefined" && location.protocol.startsWith("http");
+
 export const contactConfig = {
-  endpoint: (import.meta.env.VITE_CONTACT_ENDPOINT ?? "").trim(),
+  endpoint: servedOverHttp ? (import.meta.env.VITE_CONTACT_ENDPOINT ?? "").trim() || "/api/contact" : "",
   email: (import.meta.env.VITE_CONTACT_EMAIL ?? "").trim(),
 };
 
