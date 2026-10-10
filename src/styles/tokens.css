@@ -1,0 +1,56 @@
+/* Design tokens — the whole palette and scale lives here. */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #050a12; /* midnight black */
+  --bg-2: #08101b;
+  --surface: #0b1625; /* deep navy */
+  --surface-2: #0f1d30;
+  --line: rgba(166, 182, 200, 0.12);
+  --line-2: rgba(166, 182, 200, 0.2);
+
+  /* Accents — blue leads, purple is reserved for emphasis */
+  --blue: #20c5ff;
+  --blue-dim: rgba(32, 197, 255, 0.14);
+  --purple: #a855f7;
+  --purple-dim: rgba(168, 85, 247, 0.16);
+  --violet: #c4b5fd;
+
+  /* Text */
+  --text: #f4f8ff;
+  --text-2: #a6b6c8;
+  --text-3: #74869b;
+
+  /* Status */
+  --good: #4ade80;
+  --warn: #fbbf24;
+  --bad: #fb7185;
+
+  /* Chart series */
+  --s0: var(--blue);
+  --s1: #5b8cff;
+  --s2: var(--purple);
+  --s3: #3b4f6b;
+
+  /* Type */
+  --font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: clamp(1.75rem, 1.2rem + 1.7vw, 2.5rem);
+  --fs-hero: clamp(2.4rem, 1.3rem + 3.4vw, 3.9rem);
+
+  /* Shape & space */
+  --r-sm: 8px;
+  --r: 12px;
+  --r-lg: 18px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --section: clamp(80px, 9vw, 128px);
+  --maxw: 1200px;
+  --header-h: 68px;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 24px 60px -30px rgba(0, 0, 0, 0.7);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
