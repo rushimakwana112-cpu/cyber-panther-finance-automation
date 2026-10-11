@@ -53,9 +53,9 @@ export const contactConfig = {
 };
 
 export const budgets = [
-  "Under ₹10,000",
-  "₹10,000 – ₹25,000",
-  "₹25,000 – ₹50,000",
-  "Above ₹50,000",
+  "Under ₹5,000",
+  "₹5,000 – ₹15,000",
+  "₹15,000 – ₹30,000",
+  "Above ₹30,000",
   "Not sure yet",
 ];
