@@ -1,0 +1,131 @@
+<!doctype html>
+<!--
+  Social share image (og:image) source. Rendered to public/og-image.png at 1200x627 by:
+    node scripts/og/render-og.mjs
+  Story: messy raw finance data (left) flows through the automation pipeline into a clean, rising report (right).
+  The fragments are illustrative only — no real or claimed figures.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a12; --surface: #0b1625; --line: rgba(166,182,200,.14); --line-2: rgba(166,182,200,.24);
+    --blue: #20c5ff; --purple: #a855f7; --violet: #c4b5fd; --text: #f4f8ff; --text-2: #a6b6c8; --text-3: #74869b; --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 627px; overflow: hidden; background: var(--bg); }
+  body { position: relative; font-family: "Geist", system-ui, sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+
+  /* Atmosphere: one blue wash, one faint purple wash, a fading data grid */
+  .wash { position: absolute; inset: 0; background:
+      radial-gradient(520px 420px at 88% 18%, rgba(32,197,255,.16), transparent 70%),
+      radial-gradient(420px 360px at 70% 92%, rgba(168,85,247,.12), transparent 70%); }
+  .grid { position: absolute; inset: 0; opacity: .5;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      -webkit-mask-image: radial-gradient(70% 90% at 78% 50%, #000 0%, transparent 72%); }
+
+  /* Left: brand + message */
+  .copy { position: absolute; left: 72px; top: 64px; width: 560px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand b { display: block; font-size: 17px; font-weight: 600; letter-spacing: .18em; }
+  .brand span { display: block; margin-top: 4px; font: 500 11px/1 "Geist Mono", monospace; letter-spacing: .24em; color: var(--blue); }
+  h1 { margin-top: 70px; font-size: 62px; line-height: 1.02; font-weight: 600; letter-spacing: -.045em; }
+  h1 em { font-style: normal; background: linear-gradient(100deg, var(--blue) 10%, #7aa8ff 55%, var(--violet) 100%);
+          -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .roles { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 17px; color: var(--text-2); }
+  .roles i { font-style: normal; color: var(--purple); margin-right: 8px; }
+  .url { position: absolute; left: 72px; bottom: 54px; display: flex; align-items: center; gap: 12px;
+         font: 500 15px/1 "Geist Mono", monospace; color: var(--text-3); letter-spacing: .02em; }
+  .url::before { content: ""; width: 28px; height: 1px; background: var(--blue); }
+
+  /* Right: the transformation */
+  .stage { position: absolute; right: 0; top: 0; width: 560px; height: 627px; }
+  .raw { position: absolute; font: 500 14px/1 "Geist Mono", monospace; color: #fcd98a; padding: 8px 11px;
+         border: 1px dashed rgba(251,191,36,.38); border-radius: 8px; background: rgba(251,191,36,.05); white-space: pre;
+         text-decoration: underline wavy rgba(251,191,36,.55); text-underline-offset: 5px; text-decoration-thickness: 1px; }
+  .raw.dup { color: #fecdd3; border-color: rgba(251,113,133,.4); background: rgba(251,113,133,.06); text-decoration-color: rgba(251,113,133,.55); }
+  .flow { position: absolute; inset: 0; }
+  .report { position: absolute; right: 56px; top: 150px; width: 300px; padding: 20px 22px 18px;
+            border: 1px solid var(--line-2); border-radius: 18px;
+            background: linear-gradient(180deg, rgba(15,29,48,.95), rgba(8,16,27,.95));
+            box-shadow: 0 0 0 1px rgba(32,197,255,.06), 0 30px 80px -30px rgba(32,197,255,.45); }
+  .report__head { display: flex; justify-content: space-between; align-items: center; }
+  .report__title { font-size: 15px; font-weight: 600; }
+  .ok { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 "Geist Mono", monospace; letter-spacing: .08em; color: #4ade80; text-transform: uppercase; }
+  .ok::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgba(74,222,128,.15); }
+  .rows { margin-top: 16px; display: grid; gap: 9px; }
+  .row { display: grid; grid-template-columns: 74px 1fr; align-items: center; gap: 12px; font: 500 12px/1 "Geist Mono", monospace; color: var(--text-2); }
+  .row span:last-child { height: 8px; border-radius: 4px; background: linear-gradient(90deg, rgba(32,197,255,.55), var(--blue)); }
+  .row.hi span:last-child { background: linear-gradient(90deg, rgba(168,85,247,.55), var(--purple)); }
+  .chart { margin-top: 18px; overflow: visible; }
+  .tag { margin-top: 12px; font: 500 10px/1 "Geist Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+</style>
+</head>
+<body>
+  <div class="wash"></div>
+  <div class="grid"></div>
+
+  <section class="copy">
+    <div class="brand">
+      <svg width="46" height="46" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M3 28 L16 3.5 L29 28" stroke="#20C5FF" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+        <rect x="11.2" y="21" width="2.6" height="7" rx=".6" fill="#20C5FF"/>
+        <rect x="14.7" y="18" width="2.6" height="10" rx=".6" fill="#20C5FF" opacity=".85"/>
+        <rect x="18.2" y="15" width="2.6" height="13" rx=".6" fill="#20C5FF" opacity=".7"/>
+        <path d="M12.4 17.6 L18.4 12.8" stroke="#A6B6C8" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="12.4" cy="17.6" r="1.7" fill="#20C5FF"/><circle cx="18.4" cy="12.8" r="1.9" fill="#A855F7"/>
+      </svg>
+      <div><b>CYBER PANTHER</b><span>FINANCE &amp; AUTOMATION</span></div>
+    </div>
+    <h1>Turn Financial Data Into <em>Business Intelligence.</em></h1>
+    <div class="roles"><span><i>/</i>Accountant</span><span><i>/</i>Financial Data Analyst</span><span><i>/</i>Automation Specialist</span></div>
+  </section>
+  <div class="url">cyber-panther-finance-automation.vercel.app</div>
+
+  <section class="stage">
+    <!-- data-flow lines from the raw fragments into the report -->
+    <svg class="flow" viewBox="0 0 560 627" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="f" x1="0" x2="1"><stop offset="0" stop-color="#20C5FF" stop-opacity="0"/><stop offset=".55" stop-color="#20C5FF" stop-opacity=".7"/><stop offset="1" stop-color="#A855F7" stop-opacity=".9"/></linearGradient>
+      </defs>
+      <g stroke="url(#f)" stroke-width="1.4">
+        <path d="M120 128 C170 128, 160 230, 204 250"/>
+        <path d="M96 212 C160 212, 150 268, 204 275"/>
+        <path d="M128 300 C170 300, 168 300, 204 300"/>
+        <path d="M100 388 C160 388, 150 330, 204 325"/>
+        <path d="M118 470 C170 470, 160 370, 204 350"/>
+      </g>
+      <g fill="#20C5FF"><circle cx="164" cy="190" r="2.6"/><circle cx="172" cy="300" r="2.6"/><circle cx="160" cy="400" r="2.6"/></g>
+      <g fill="#A855F7"><circle cx="196" cy="268" r="2.4"/><circle cx="194" cy="336" r="2.4"/></g>
+    </svg>
+
+    <!-- raw, messy inputs (illustrative) -->
+    <div class="raw" style="left:-6px; top:112px; transform: rotate(-4deg)">03/04/25</div>
+    <div class="raw" style="left:-34px; top:196px; transform: rotate(3deg)">"12,500"</div>
+    <div class="raw dup" style="left:-4px; top:284px; transform: rotate(-2deg)">TXN-1042 ×2</div>
+    <div class="raw" style="left:-28px; top:372px; transform: rotate(4deg)">abc traders </div>
+    <div class="raw" style="left:-8px; top:454px; transform: rotate(-3deg)">₹ 15,200.00</div>
+
+    <!-- clean output -->
+    <div class="report">
+      <div class="report__head"><span class="report__title">Monthly report</span><span class="ok">Reconciled</span></div>
+      <div class="rows">
+        <div class="row hi"><span>Revenue</span><span style="width:100%"></span></div>
+        <div class="row"><span>Expenses</span><span style="width:68%"></span></div>
+        <div class="row"><span>Margin</span><span style="width:42%"></span></div>
+      </div>
+      <svg class="chart" width="256" height="92" viewBox="0 0 256 92" fill="none" aria-hidden="true">
+        <defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#20C5FF" stop-opacity=".28"/><stop offset="1" stop-color="#20C5FF" stop-opacity="0"/></linearGradient></defs>
+        <g stroke="rgba(166,182,200,.14)" stroke-dasharray="2 4"><line x1="0" x2="256" y1="22" y2="22"/><line x1="0" x2="256" y1="52" y2="52"/><line x1="0" x2="256" y1="82" y2="82"/></g>
+        <path d="M0 74 C18 72, 26 62, 42 64 S70 52, 86 55 S112 40, 128 44 S156 30, 172 33 S200 20, 214 22 S240 8, 256 6 V92 H0 Z" fill="url(#a)"/>
+        <path d="M0 74 C18 72, 26 62, 42 64 S70 52, 86 55 S112 40, 128 44 S156 30, 172 33 S200 20, 214 22 S240 8, 256 6" stroke="#20C5FF" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="256" cy="6" r="4.5" fill="#A855F7"/><circle cx="256" cy="6" r="9" fill="#A855F7" opacity=".2"/>
+      </svg>
+      <div class="tag">Raw data → clean, automated insight</div>
+    </div>
+  </section>
+</body>
+</html>

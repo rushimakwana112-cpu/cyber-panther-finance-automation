@@ -49,13 +49,15 @@ The same URL is shared publicly (e.g. LinkedIn). Redeploys never change it — d
 ```
 AGENTS.md            this file
 README.md            human-oriented setup guide
-index.html           SEO meta, favicon (inline data-URI), Google Fonts (Geist / Geist Mono)
+index.html           SEO + social share meta (og:image etc.), favicon (inline data-URI), Google Fonts
+public/og-image.png  1200×627 social share image (LinkedIn/WhatsApp/X preview)
 vercel.json          build config + security headers (CSP etc.)
 vite.config.ts       dev proxy /api → :8787; `preview` reuses vercel.json headers
 api/contact.ts       serverless email function (validation, spam traps, rate limit, Resend)
 scripts/
   dev-api.mjs        local runner for api/contact.ts on :8787 (dry-run by default)
   make-single-file.mjs  builds the double-clickable "Cyber Panther.html" from dist/
+  og/og-image.html + og/render-og.mjs  share-image design; `node scripts/og/render-og.mjs` re-renders public/og-image.png
 tests/contact.test.mjs  11 tests for the function (node:test)
 Cyber Panther.html   GENERATED single-file copy of the site (committed; rebuilt by `npm run build`)
 src/
@@ -99,6 +101,7 @@ Nav items and section→nav aliases live in `src/content/site.ts` (`nav`, `navAl
 | Demo numbers | `src/data/*.ts` (keep totals consistent) |
 | Colours/spacing/type | `src/styles/tokens.css` |
 | Security headers / CSP | `vercel.json` (and re-test — see §9) |
+| Social share preview | design `scripts/og/og-image.html` → `node scripts/og/render-og.mjs`; tags in `index.html`. After deploying, refresh LinkedIn's cache at linkedin.com/post-inspector |
 
 After any edit: build, test, check in a browser, commit, push, deploy (§7).
 
@@ -194,6 +197,7 @@ stronger spam protection); Resend test sender deliverability (verify a domain); 
 | `a585eb0` | Rebuilt as Vite + React + TS source; redesign; new workflow map; bug fixes |
 | `af477d8` | Contact email function, Vercel config, security headers, dependency fixes, tests |
 | `cc0cd42` | Lowered contact-form budget ranges |
+| (next) | Social share image + og/twitter tags (LinkedIn preview) |
 
 Also: an older copy of the site was published as a private claude.ai artifact (https://claude.ai/artifact/FYxQsXED1HtXmx85DRn2Jh). It is **stale** and its form cannot send — the Vercel URL is the real site.
 
@@ -202,7 +206,6 @@ Also: an older copy of the site was published as a private claude.ai artifact (h
 - Visitor analytics: enable **Vercel Web Analytics** (cookie-less; needs a small code addition + redeploy; works with the current CSP because it is same-origin under `/_vercel/insights`). Owner asked about this and chose to wait.
 - Connect GitHub → Vercel auto-deploys.
 - Cloudflare Turnstile on the form; self-hosted fonts; custom domain + verified Resend sender.
-- Social share image (`og:image`) — none yet; Canva candidates were generated but not saved/used.
 - Footer social links (LinkedIn etc.) — `socials` is empty.
 
 ## 13. The `cyberpanther` skill (outside this repo)
