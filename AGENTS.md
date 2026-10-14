@@ -56,10 +56,9 @@ vite.config.ts       dev proxy /api → :8787; `preview` reuses vercel.json head
 api/contact.ts       serverless email function (validation, spam traps, rate limit, Resend)
 scripts/
   dev-api.mjs        local runner for api/contact.ts on :8787 (dry-run by default)
-  make-single-file.mjs  builds the double-clickable "Cyber Panther.html" from dist/
+  make-single-file.mjs  `npm run build:single` → dist/cyber-panther.html (double-clickable single file)
   og/og-image.html + og/render-og.mjs  share-image design; `node scripts/og/render-og.mjs` re-renders public/og-image.png
 tests/contact.test.mjs  11 tests for the function (node:test)
-Cyber Panther.html   GENERATED single-file copy of the site (committed; rebuilt by `npm run build`)
 src/
   content/           ← EDIT COPY HERE: site.ts (brand, nav, budgets, contact config), services.ts,
                        tools.ts (7 tools + 5 workflow stages), projects.ts, strengths.ts
@@ -69,7 +68,6 @@ src/
   sections/          Hero, Dashboard, Strengths, Workflow, DataCleaning, FeaturedService,
                      Portfolio (+ demos/JoinDemo, RefreshDemo, MarginDemo), About, Contact
   styles/            tokens.css · base.css · components.css · sections.css
-skill-tests/         local test outputs for the cyberpanther skill — git-ignored
 ```
 
 ## 5. Page structure (section ids matter — nav and buttons link to them)
@@ -112,7 +110,8 @@ npm install
 npm run dev:api        # contact function on :8787, DRY RUN (logs the email, sends nothing)
 npm run dev            # site on http://localhost:5173 (proxies /api to :8787)
 npm test               # 11 API tests — must pass
-npm run build          # tsc + vite build → dist/ + regenerates "Cyber Panther.html"
+npm run build          # tsc + vite build → dist/ (what Vercel serves)
+npm run build:single   # optional single-file copy → dist/cyber-panther.html
 npm run preview        # serve dist/ on :4173 with production security headers
 ```
 
@@ -182,7 +181,7 @@ Changing env vars requires a redeploy. Status: a live end-to-end submission retu
 - Headers (`vercel.json`): CSP `default-src 'self'; script-src 'self'; style-src 'self' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; object-src 'none'; base-uri 'self'`, HSTS (preload), X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy, COOP. Hashed assets cached immutable.
 - **Adding any third-party script, font, image host or API call requires updating the CSP**, then testing with `npm run preview` (it serves the same headers) and checking the console for violations.
 - No `dangerouslySetInnerHTML`/`innerHTML` anywhere; React escapes output. Keep it that way.
-- No secrets in git history (scanned). `.env*` (except `.env.example`), `.vercel/`, `dist/`, `skill-tests/` are ignored.
+- No secrets in git history (scanned). `.env*` (except `.env.example`), `.vercel/`, `dist/`, `node_modules/`, `.claude/` are ignored.
 - `vite-plugin-singlefile` was removed on purpose (vulnerable `braces` chain with no fix); the single-file build is done by `scripts/make-single-file.mjs`.
 
 Known remaining risks / suggestions: per-instance rate limit (add Cloudflare Turnstile or a shared store for
@@ -197,7 +196,8 @@ stronger spam protection); Resend test sender deliverability (verify a domain); 
 | `a585eb0` | Rebuilt as Vite + React + TS source; redesign; new workflow map; bug fixes |
 | `af477d8` | Contact email function, Vercel config, security headers, dependency fixes, tests |
 | `cc0cd42` | Lowered contact-form budget ranges |
-| (next) | Social share image + og/twitter tags (LinkedIn preview) |
+| `ea9530f` | Social share image + og/twitter tags (LinkedIn preview) |
+| (next) | Folder tidy-up: removed generated `Cyber Panther.html` from the repo (now optional `npm run build:single`) |
 
 Also: an older copy of the site was published as a private claude.ai artifact (https://claude.ai/artifact/FYxQsXED1HtXmx85DRn2Jh). It is **stale** and its form cannot send — the Vercel URL is the real site.
 
@@ -213,7 +213,7 @@ Also: an older copy of the site was published as a private claude.ai artifact (h
 A Claude Code skill at `C:\Users\Rushi Makwana\.claude\skills\cyberpanther` converts Excel dashboards, CSV/XLSX
 data, PDFs and dashboard screenshots into this site's visual style (HTML dashboards, styled .xlsx, branded PDF
 reports, matplotlib theme). Its `references/design-system.md` is the full style rulebook and is the best reference
-for any new visual work. A packaged copy is `skill-tests/cyberpanther.skill` (local only).
+for any new visual work. To share it, package it with the skill-creator (`python -m scripts.package_skill <skill folder>`).
 
 ## 14. Checklist for any change
 

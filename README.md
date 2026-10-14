@@ -20,11 +20,12 @@ Requires Node 22.18 or newer (the local API runner executes TypeScript directly)
 
 ```bash
 npm test             # contact function tests (validation, spam traps, origin check, rate limit, escaping…)
-npm run build        # type-check + production build in dist/ + single-file "Cyber Panther.html"
+npm run build        # type-check + production build in dist/ (what Vercel serves)
+npm run build:single # optional: dist/cyber-panther.html, one self-contained file
 npm run preview      # serve dist/ with the same security headers as production
 ```
 
-`Cyber Panther.html` is a self-contained copy you can open by double-clicking. Opened from disk it has
+`dist/cyber-panther.html` (from `npm run build:single`) is a self-contained copy you can open by double-clicking. Opened from disk it has
 no server behind it, so its contact form says plainly that the message can't be sent from there.
 
 ## Editing content

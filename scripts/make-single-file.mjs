@@ -1,5 +1,5 @@
-// Builds "Cyber Panther.html": the production build with its JS and CSS inlined, so the
-// site can be opened by double-clicking one file. The hosted site uses dist/ as-is.
+// `npm run build:single` → dist/cyber-panther.html: the production build with its JS and CSS
+// inlined, so the site can be opened by double-clicking one file. The hosted site uses dist/ as-is.
 //
 // Opened from disk, the contact form cannot reach /api/contact and will say so honestly.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -21,5 +21,5 @@ if (/src="\/assets\/|href="\/assets\//.test(html)) {
   throw new Error("make-single-file: an asset reference was not inlined — check the dist/index.html format.");
 }
 
-writeFileSync("Cyber Panther.html", html);
-console.log(`Wrote Cyber Panther.html (${(html.length / 1024).toFixed(0)} KB)`);
+writeFileSync(join(dist, "cyber-panther.html"), html);
+console.log(`Wrote dist/cyber-panther.html (${(html.length / 1024).toFixed(0)} KB)`);
