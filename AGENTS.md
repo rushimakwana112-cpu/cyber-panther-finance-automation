@@ -203,6 +203,10 @@ Also: an older copy of the site was published as a private claude.ai artifact (h
 
 ## 12. Open ideas / not done yet (ask the owner before doing)
 
+- **Cyber Panther v2 is in progress** on branch `v2`, in the separate folder `C:\My Work\test\cyber panther v2`
+  (a git worktree). Build v2 there, not here. v1 (`main`, this folder) stays live until the owner says v2 is ready;
+  then merge `v2` into `main` here and deploy `--prod` from this folder (see AGENTS.md §0 in the v2 folder).
+
 - Visitor analytics: enable **Vercel Web Analytics** (cookie-less; needs a small code addition + redeploy; works with the current CSP because it is same-origin under `/_vercel/insights`). Owner asked about this and chose to wait.
 - Connect GitHub → Vercel auto-deploys.
 - Cloudflare Turnstile on the form; self-hosted fonts; custom domain + verified Resend sender.
