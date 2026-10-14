@@ -5,6 +5,21 @@ built, deployed and secured, and the rules the owner cares about. Last updated: 
 
 ---
 
+## ⚠️ 0. You are in **Cyber Panther v2** (work in progress)
+
+This folder (`C:\My Work\test\cyber panther v2`) is the **v2 branch** — a git worktree of the same repo as v1.
+v1 lives in `C:\My Work\test\cyber panther` on branch `main` and is what the public URL serves.
+
+- Commit here on branch `v2`; push with `git push origin v2`. **Never** commit v2 work to `main` and never force-push.
+- Deploy **previews only**: `npx vercel@63.1.2 deploy --yes` (no `--prod`). Preview URLs are private (Vercel login required).
+  **Never run `deploy --prod` from this folder** — that would replace the live v1 site.
+- Going live (only when the owner says v2 is ready): in the v1 folder, `git merge v2` into `main` (resolve conflicts,
+  run the full §14 checklist), `git push origin main`, then `npx vercel@63.1.2 deploy --prod --yes` from the v1 folder,
+  and verify. The public URL stays the same.
+- Everything below (rules, structure, security) still applies to v2.
+
+---
+
 ## 1. What this is
 
 **Cyber Panther — Finance & Automation** is the portfolio and lead-generation website of **Rushi**:
