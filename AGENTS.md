@@ -95,8 +95,9 @@ src/
 | 03 | `process` | Data-cleaning demo: Raw → Clean & transform → Analyze → Report → Business insights |
 | 04 | `services` | Featured SQL service + live SQL console demo + "Also available" list; "Discuss This Service" preselects the form |
 | 05 | `portfolio` | 3 tabbed demo projects (problem / solution / tools / try it) |
-| 06 | `about` | "Hi, I'm Rushi" + principles |
-| 07 | `contact` | Enquiry form |
+| 06 | `ai-projects` | Applied-AI case studies (`src/content/aiProjects.ts`; tabs appear when >1). First: Payroll AI Assistant + chat demo on fictional data (`src/data/payrollBot.ts`) |
+| 07 | `about` | "Hi, I'm Rushi" + principles + applied-AI learning paragraph |
+| 08 | `contact` | Enquiry form |
 
 Nav items and section→nav aliases live in `src/content/site.ts` (`nav`, `navAliases`).
 "Discuss" buttons call `goToContact(serviceId)` (`src/lib/contact.ts`), which dispatches `cp:select-service`.
@@ -109,6 +110,7 @@ Nav items and section→nav aliases live in `src/content/site.ts` (`nav`, `navAl
 | Contact form budget ranges | `src/content/site.ts` → `budgets` (current: Under ₹5,000 / ₹5,000–15,000 / ₹15,000–30,000 / Above ₹30,000 / Not sure yet) |
 | Services (featured + list + form dropdown) | `src/content/services.ts` (exactly one `featured: true`) |
 | Tool descriptions/snippets, workflow stages | `src/content/tools.ts` |
+| AI project case studies | `src/content/aiProjects.ts` (demos in `src/sections/demos/`) |
 | Portfolio projects text | `src/content/projects.ts` (interactive demo components in `src/sections/demos/`) |
 | Social links in footer | `src/content/site.ts` → `socials` (empty = hidden) |
 | Demo numbers | `src/data/*.ts` (keep totals consistent) |

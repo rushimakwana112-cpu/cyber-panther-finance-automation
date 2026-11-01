@@ -3,7 +3,7 @@ import { principles } from "../content/strengths";
 
 export function About() {
   return (
-    <Section id="about" index="06" eyebrow="About" title="Hi, I’m Rushi." className="about">
+    <Section id="about" index="07" eyebrow="About" title="Hi, I’m Rushi." className="about">
       <div className="about__grid">
         <div className="about__copy">
           <p className="about__lead">
@@ -17,6 +17,10 @@ export function About() {
             So I combine accounting knowledge with financial data analysis and automation — SQL, Excel, Power Query, VBA and Python — to build
             reports that are accurate, repeatable and quick to refresh. Because I understand the finance side, the automation follows how your
             accounts actually work, not the other way round.
+          </p>
+          <p>
+            Lately I’ve been learning applied AI and using it to go further — from automated reports to tools people can simply talk to, like
+            the payroll assistant above. Building with AI is also how I learn: I pick up a new tool by making something real with it.
           </p>
         </div>
         <div>

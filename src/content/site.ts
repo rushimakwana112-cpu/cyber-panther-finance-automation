@@ -21,6 +21,7 @@ export const nav: NavItem[] = [
   { id: "services", label: "Services" },
   { id: "workflow", label: "Workflow" },
   { id: "portfolio", label: "Portfolio" },
+  { id: "ai-projects", label: "AI Projects" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];
