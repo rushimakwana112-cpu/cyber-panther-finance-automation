@@ -131,7 +131,7 @@ export function Contact() {
   };
 
   return (
-    <Section id="contact" index="07" eyebrow="Contact" title="Let’s fix the report you rebuild every month." className="contact">
+    <Section id="contact" index="08" eyebrow="Contact" title="Let’s fix the report you rebuild every month." className="contact">
       <div className="contact__grid">
         <div className="contact__aside">
           <p>Tell me what you’re working with — the data, the tools and the output you need. I’ll reply with how I’d approach it and an estimate.</p>

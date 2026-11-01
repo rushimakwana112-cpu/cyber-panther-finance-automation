@@ -1,6 +1,7 @@
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { About } from "./sections/About";
+import { AiProjects } from "./sections/AiProjects";
 import { Contact } from "./sections/Contact";
 import { DataCleaning } from "./sections/DataCleaning";
 import { FeaturedService } from "./sections/FeaturedService";
@@ -23,6 +24,7 @@ export function App() {
         <DataCleaning />
         <FeaturedService />
         <Portfolio />
+        <AiProjects />
         <About />
         <Contact />
       </main>
