@@ -1,38 +1,38 @@
-// Brand, navigation and contact settings. Edit here — components read from this file.
+// Brand, navigation and contact settings. Edit here: components read from this file.
+import type { PageId } from "../lib/route";
 
 export const brand = {
   name: "Cyber Panther",
   descriptor: "Finance & Automation",
-  owner: "Rushi",
-  roles: ["Accountant", "Financial Data Analyst", "Financial Automation Specialist"],
-  headline: "Turn Financial Data Into Business Intelligence.",
-  // The two words that receive the accent treatment in the hero headline.
-  headlineAccent: "Business Intelligence.",
-  lead: "I help businesses organize financial data, automate recurring reports, and turn complex information into clear, useful business insights.",
-  audience:
-    "For business owners, finance teams and accounting practices that rebuild the same reports every month.",
-  tagline: "Cleaner data, automated reports, clearer decisions.",
+  owner: "Rushi Makwana",
+  positioning: ["Finance", "Accounting", "Payroll Operations", "Automation", "Data Analytics"],
+  headline: ["Finance Expertise.", "Intelligent Automation.", "Real Business Impact."],
+  message: "Transforming Finance Operations Through Intelligent Automation.",
+  lead: "I work in finance, accounting and payroll, and I build tools that take over repetitive work, check for mistakes and make reports easier to read. I use tools such as Excel, Python, SQL and AI.",
 };
 
-export type NavItem = { id: string; label: string };
+export type NavItem = { id: PageId; label: string };
 
-/** Header navigation. `id` must match a section id on the page. */
 export const nav: NavItem[] = [
-  { id: "services", label: "Services" },
-  { id: "workflow", label: "Workflow" },
-  { id: "portfolio", label: "Portfolio" },
-  { id: "ai-projects", label: "AI Projects" },
-  { id: "about", label: "About" },
+  { id: "home", label: "Home" },
+  { id: "about", label: "About Me" },
+  { id: "projects", label: "Projects" },
+  { id: "capabilities", label: "Capabilities" },
+  { id: "technology", label: "Technology" },
+  { id: "security", label: "Security & Approach" },
+  { id: "personal", label: "Personal Projects" },
   { id: "contact", label: "Contact" },
 ];
 
-/**
- * Sections that are not in the nav, mapped to the nav item they should highlight
- * (e.g. the data-cleaning demo keeps "Workflow" lit). Map to "home" to highlight nothing.
- */
-export const navAliases: Record<string, string> = {
-  strengths: "home",
-  process: "workflow",
+export const pageTitles: Record<PageId, string> = {
+  home: "Finance, Payroll Operations & Automation",
+  about: "About Me",
+  projects: "Projects",
+  capabilities: "Capabilities",
+  technology: "Technology",
+  security: "Security & Approach",
+  personal: "Personal Projects",
+  contact: "Contact",
 };
 
 /** Social links shown in the footer. Leave empty to hide the row. */
@@ -44,7 +44,7 @@ export const socials: { label: "LinkedIn" | "GitHub" | "Email"; href: string }[]
  *    which emails the enquiry. Override with VITE_CONTACT_ENDPOINT only to use another service.
  *    When the page is opened from disk (file://) there is no server, so the form reports that honestly.
  *  - email: optional public address for the "send via your email app" fallback (VITE_CONTACT_EMAIL).
- * Both values are public page content — never put a secret in a VITE_ variable.
+ * Both values are public page content. Never put a secret in a VITE_ variable.
  */
 const servedOverHttp = typeof location !== "undefined" && location.protocol.startsWith("http");
 
@@ -53,10 +53,4 @@ export const contactConfig = {
   email: (import.meta.env.VITE_CONTACT_EMAIL ?? "").trim(),
 };
 
-export const budgets = [
-  "Under ₹5,000",
-  "₹5,000 – ₹15,000",
-  "₹15,000 – ₹30,000",
-  "Above ₹30,000",
-  "Not sure yet",
-];
+export const opportunityTypes = ["Full-time job", "Contract or part-time work", "Something else"];

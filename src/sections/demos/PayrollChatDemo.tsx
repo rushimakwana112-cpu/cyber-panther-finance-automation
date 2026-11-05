@@ -8,7 +8,6 @@ import { rovingKey, useReducedMotion } from "../../lib/hooks";
 // Mirrors the real assistant's answer layout: summary, KPI tiles, then Chart / Table / SQL / Insights tabs.
 type Answer = {
   q: string;
-  intent: string;
   sql: string;
   text: string;
   kpis: { k: string; v: string }[];
@@ -37,7 +36,6 @@ function changeInsight() {
 const answers: Answer[] = [
   {
     q: "Give me projection of Oct-26",
-    intent: `report: "projection", target: "Oct-2026", based_on: "Sep-2026"`,
     sql: `SELECT WorkOrder, Employee, CTC,
        InvoiceAmount * 100.0 / 118 AS BaseSales
 FROM   payroll
@@ -53,11 +51,10 @@ WHERE  Month = ? AND Year = ?;   -- 9, 2026
     bars: sepWo.map((w) => ({ label: w.wo, value: w.base })),
     cols: ["Work order", "Base sales", "CTC", "Margin"],
     rows: sepWo.map((w) => [w.wo, rupees(w.base), rupees(w.ctc), rupees(w.margin)]),
-    insight: `${sepWo[0].wo} carries most of the projected margin. ${sepWo[sepWo.length - 1].wo} is close to break-even, so any salary revision there would turn it negative.`,
+    insight: `${sepWo[0].wo} brings in most of the expected profit. ${sepWo[sepWo.length - 1].wo} is close to making no profit, so a salary increase there could cause a loss.`,
   },
   {
     q: "Which work order has the highest margin in Sep-26?",
-    intent: `report: "wo_margin", month: "Sep-2026", sort: "margin %"`,
     sql: `SELECT WorkOrder,
        MAX(InvoiceAmount) * 100.0 / 118 AS BaseSales,
        SUM(CTC) AS CTC
@@ -72,11 +69,10 @@ GROUP  BY WorkOrder;             -- 9, 2026`,
     bars: sepWo.map((w) => ({ label: w.wo, value: w.margin })),
     cols: ["Work order", "Base sales", "CTC", "Margin %"],
     rows: sepWo.map((w) => [w.wo, rupees(w.base), rupees(w.ctc), percent(w.pct)]),
-    insight: `${sepWo[sepWo.length - 1].wo} is thin at ${percent(sepWo[sepWo.length - 1].pct)} — worth reviewing its billing rate.`,
+    insight: `${sepWo[sepWo.length - 1].wo} has a low margin of ${percent(sepWo[sepWo.length - 1].pct)} , so it is worth reviewing.`,
   },
   {
     q: "Compare Aug-26 and Sep-26 CTC",
-    intent: `report: "change", periods: ["Aug-2026", "Sep-2026"]`,
     sql: `SELECT Month, COUNT(DISTINCT Employee) AS Employees,
        SUM(CTC) AS CTC
 FROM   payroll
@@ -93,24 +89,23 @@ GROUP  BY Month;                 -- 2026, 8, 9`,
     insight: changeInsight(),
   },
   {
-    q: "List each employee’s salary for Sep-26 (as a totals-only user)",
-    intent: `report: "employee_list", month: "Sep-2026"`,
-    policy: "Policy for this ID: totals only",
+    q: "List each employee’s salary for Sep-26 (for a user who can see totals only)",
+    policy: "This user can see totals only",
     sql: `SELECT SUM(GrossAmount) AS Gross, SUM(CTC) AS CTC
 FROM   payroll
 WHERE  Month = ? AND Year = ?;   -- 9, 2026`,
-    text: "Your ID can see totals only, so employee-level rows are hidden. Here is the Sep-2026 total instead.",
+    text: "This user can see totals only, so individual salaries are hidden. Here is the Sep-2026 total instead.",
     kpis: [
       { k: "Gross", v: rupeesShort(sep.gross) },
       { k: "CTC", v: rupeesShort(sep.ctc) },
     ],
     cols: ["Month", "Gross", "CTC"],
     rows: [["Sep-2026", rupees(sep.gross), rupees(sep.ctc)]],
-    insight: "Admins decide per user which columns and rows are visible; the AI cannot bypass it.",
+    insight: "In this demo, individual salaries stay hidden because this user can see totals only.",
   },
 ];
 
-const steps = ["Question received", "Local AI picked a report", "Read-only SQL ran", "Rules applied, answer written"];
+const steps = ["Question received", "Worked out what you are asking", "Found the data", "Answer written"];
 type View = "Chart" | "Table" | "SQL" | "Insights";
 
 function AnswerView({ a }: { a: Answer }) {
@@ -218,7 +213,7 @@ export function PayrollChatDemo() {
     <div className="demo chatdemo">
       <div className="chatdemo__bar">
         <span className="chatdemo__dot" aria-hidden="true" />
-        <span className="mono">SQL Server connected · qwen2.5:3b · Ollama · read-only · on-prem</span>
+        <span className="mono">Demo copy · fictional rows · runs in your browser</span>
       </div>
       <p className="chatdemo__label">Try a question</p>
       <div className="chatdemo__qs">
@@ -231,7 +226,7 @@ export function PayrollChatDemo() {
 
       <div className="chatdemo__log" aria-live="polite">
         {!a ? (
-          <p className="chatdemo__empty">Pick a question to watch how the assistant turns it into a safe, checked answer.</p>
+          <p className="chatdemo__empty">Pick a question to see how the assistant answers it.</p>
         ) : (
           <div key={active}>
             <div className="bubble bubble--user">{a.q}</div>
@@ -241,8 +236,7 @@ export function PayrollChatDemo() {
                   <span className="chatdemo__tick">{step > i ? <Icon name="check" size={13} /> : <span className="num">{i + 1}</span>}</span>
                   <span>
                     {s}
-                    {i === 1 && step > 1 && <code className="chatdemo__intent">{a.intent}</code>}
-                    {i === 3 && step > 3 && a.policy && <span className="pill pill--warn chatdemo__policy">{a.policy}</span>}
+                                        {i === 3 && step > 3 && a.policy && <span className="pill pill--warn chatdemo__policy">{a.policy}</span>}
                   </span>
                 </li>
               ))}

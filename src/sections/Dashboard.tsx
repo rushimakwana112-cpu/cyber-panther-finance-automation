@@ -60,8 +60,8 @@ function Kpi(props: {
   );
 }
 
-/** Hero dashboard: metric tabs, period switch, interactive trend and expense mix. */
-export function Dashboard() {
+/** Metric tabs, period switch and interactive trend. `compact` leaves out the expense mix (home page). */
+export function Dashboard({ compact = false }: { compact?: boolean }) {
   const [metricKey, setMetricKey] = useState<MetricKey>("revenue");
   const [periodKey, setPeriodKey] = useState<PeriodKey>("fy");
   const [mixKey, setMixKey] = useState<string | null>(null);
@@ -175,7 +175,7 @@ export function Dashboard() {
         />
       </div>
 
-      <div className="dash__mix">
+      {!compact && <div className="dash__mix">
         <div className="dash__mix-head">
           <span>Expense mix</span>
           <span className="num">{rupeesShort(periodExpenses)}</span>
@@ -214,7 +214,7 @@ export function Dashboard() {
             <span className="muted">Select a category to see its amount for {period.long}.</span>
           )}
         </p>
-      </div>
+      </div>}
     </div>
   );
 }

@@ -1,13 +1,10 @@
 import { useMemo, useState } from "react";
-import { Code } from "../components/Code";
-import { DemoTag } from "../components/DemoTag";
-import { Icon } from "../components/Icon";
-import { Section } from "../components/Section";
-import { featuredService, services } from "../content/services";
-import { INVOICES_PER_QUARTER, quarterRanges, sales } from "../data/demos";
-import { goToContact } from "../lib/contact";
-import { rupees } from "../lib/format";
-import { useReducedMotion } from "../lib/hooks";
+import { Code } from "../../components/Code";
+import { DemoTag } from "../../components/DemoTag";
+import { Icon } from "../../components/Icon";
+import { INVOICES_PER_QUARTER, quarterRanges, sales } from "../../data/demos";
+import { rupees } from "../../lib/format";
+import { useReducedMotion } from "../../lib/hooks";
 
 type Quarter = "all" | 1 | 2 | 3 | 4;
 type GroupBy = "customer" | "region";
@@ -34,7 +31,7 @@ function runQuery(q: Quarter, g: GroupBy) {
   return [...totals.entries()].map(([key, v]) => ({ key, ...v })).sort((a, b) => b.total - a.total);
 }
 
-function SqlConsole() {
+export function SqlConsole() {
   const [q, setQ] = useState<Quarter>("all");
   const [g, setG] = useState<GroupBy>("customer");
   const [ran, setRan] = useState<{ q: Quarter; g: GroupBy }>({ q: "all", g: "customer" });
@@ -124,54 +121,3 @@ function SqlConsole() {
   );
 }
 
-export function FeaturedService() {
-  const others = services.filter((s) => !s.featured && s.summary);
-  return (
-    <Section
-      id="services"
-      index="04"
-      eyebrow="Featured service"
-      title={featuredService.title}
-      intro="The service most of my work starts with: getting the right records out of your database and into a report you can trust."
-      className="service"
-    >
-      <div className="service__grid">
-        <div className="service__copy">
-          <p className="service__summary">{featuredService.summary}</p>
-          <ul className="checks">
-            {featuredService.deliverables?.map((d) => (
-              <li key={d}>
-                <Icon name="check" size={16} />
-                {d}
-              </li>
-            ))}
-          </ul>
-          <div className="service__cta">
-            <button className="btn btn--primary" onClick={() => goToContact(featuredService.id)}>
-              Discuss This Service <Icon name="arrow" size={16} />
-            </button>
-          </div>
-          {others.length > 0 && (
-            <div className="service__others">
-              <p className="service__others-title">Also available</p>
-              <ul>
-                {others.map((s) => (
-                  <li key={s.id}>
-                    <button type="button" onClick={() => goToContact(s.id)}>
-                      <span>
-                        <strong>{s.title}</strong>
-                        <span className="muted">{s.summary}</span>
-                      </span>
-                      <Icon name="arrow" size={15} />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-        <SqlConsole />
-      </div>
-    </Section>
-  );
-}

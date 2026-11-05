@@ -16,7 +16,7 @@ const stageIcon: Record<string, IconName> = {
 const stageOfTool = (k: ToolKey) => stages.findIndex((s) => s.tools.includes(k));
 
 /**
- * Automation map — the seven tools placed in the reporting workflow where they do their work.
+ * Automation map: the core tools placed in the reporting workflow where they do their work.
  * Pick a stage or a tool to see what happens there; "Walk through" steps from source to report.
  */
 export function Workflow() {
@@ -63,17 +63,16 @@ export function Workflow() {
   return (
     <Section
       id="workflow"
-      index="02"
-      eyebrow="Tools I know"
-      title="Seven tools, one reporting workflow."
-      intro="Each tool earns its place somewhere between your raw data and the finished report. Select a stage or a tool to see what it does — or walk through the whole flow."
+      eyebrow="Workflow"
+      title="How the tools work together."
+      intro="Follow how raw data becomes a finished report. Click a step or tool to see what it does, or press Walk through. The code shown is only an example."
       className="workflow"
     >
       <div className="wf">
         <div className="wf__top">
           <p className="wf__caption">
             <span className="wf__live" aria-hidden="true" />
-            How data moves through a typical automated report
+            How data becomes a report
           </p>
           <button
             type="button"

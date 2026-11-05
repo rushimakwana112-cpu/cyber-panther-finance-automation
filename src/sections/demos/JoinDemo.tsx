@@ -74,8 +74,8 @@ ${join} JOIN ${join === "INNER" ? "customers c" : "invoices i"}
       </div>
       <p className="demo__note" aria-live="polite">
         {join === "INNER"
-          ? `${rows.length} rows — only customers with invoices. ${missing.join(", ")} is excluded.`
-          : `${rows.length} rows — every customer appears. ${missing.join(", ")} shows NULL: a customer with no billing this period.`}
+          ? `INNER JOIN shows ${rows.length} rows: only customers with invoices. ${missing.join(", ")} does not appear.`
+          : `LEFT JOIN shows ${rows.length} rows: every customer appears. ${missing.join(", ")} shows NULL, meaning no invoice this period.`}
       </p>
     </div>
   );

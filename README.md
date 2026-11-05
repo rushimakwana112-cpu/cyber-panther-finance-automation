@@ -34,11 +34,13 @@ Frequently edited content lives in `src/content/` — components read from these
 
 | File | What it controls |
 | --- | --- |
-| `site.ts` | Brand name, headline, hero copy, navigation, social links, budget options |
-| `services.ts` | Services (one `featured`); every entry appears in the contact form dropdown |
-| `tools.ts` | The seven tools and the five workflow stages they belong to |
-| `projects.ts` | Portfolio demo projects (problem / solution / tools / try-it text) |
-| `strengths.ts` | The three professional strengths and the "How I work" principles |
+| `site.ts` | Brand name, headline, navigation, social links, contact options |
+| `capabilities.ts` | The eight capabilities, which also fill the business contact dropdown, and the demo list |
+| `tools.ts` | The tools and workflow stages shown in the Technology workflow map |
+| `projects.ts` | The three company case studies |
+| `about.ts` | The About Me story and course milestones |
+| `misc.ts` | Technology groups, approach and personal projects |
+| `askPanther.ts` | Ask Panther's approved answers |
 
 Demo datasets are in `src/data/` (`finance.ts` drives the hero dashboard; every total is derived from it).
 

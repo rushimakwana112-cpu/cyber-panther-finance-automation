@@ -95,9 +95,9 @@ function buildEmail(e: Enquiry) {
     ["Name", e.name],
     ["Email", e.email],
     ["Company", e.company || "—"],
-    ["Service", e.service],
-    ["Budget", e.budget || "—"],
+    ["Regarding", e.service],
   ];
+  if (e.budget) rows.push(["Budget", e.budget]);
   const text = `${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${e.message}\n\n— Sent from the Cyber Panther website contact form`;
   const html = `<table style="font:14px/1.5 Arial,sans-serif;border-collapse:collapse">${rows
     .map(([k, v]) => `<tr><td style="padding:2px 12px 2px 0;color:#667">${k}</td><td>${escapeHtml(v)}</td></tr>`)
