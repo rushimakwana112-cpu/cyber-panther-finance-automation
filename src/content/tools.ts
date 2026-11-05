@@ -17,9 +17,9 @@ export const tools: Tool[] = [
   {
     key: "sql",
     name: "SQL",
-    short: "Query, join and summarise database records.",
+    short: "Gets information out of a database.",
     finance:
-      "Pulls exactly the transactions a report needs — filtered by period, joined to customers or cost centres, and summarised before it ever reaches Excel.",
+      "Pulls out only the records a report needs, such as one month of sales, and adds them up.",
     lang: "sql",
     snippet: `SELECT cost_centre,
        SUM(amount) AS total_spend
@@ -31,9 +31,9 @@ ORDER  BY total_spend DESC;`,
   {
     key: "pq",
     name: "Power Query",
-    short: "Clean, transform and combine data.",
+    short: "Cleans and combines data in Excel.",
     finance:
-      "Connects to folders of monthly files, applies the same cleaning steps every time and refreshes the whole report when new data lands.",
+      "Reads a folder of monthly files, cleans them the same way every time and updates the report when a new file arrives.",
     lang: "m",
     snippet: `let
   Source = Folder.Files("Monthly"),
@@ -45,9 +45,9 @@ in Typed`,
   {
     key: "python",
     name: "Python",
-    short: "Scripted data processing and repeatable analysis.",
+    short: "A programming language for repeated data work.",
     finance:
-      "Handles files too large or too messy for spreadsheets: combining exports, cleaning formats and producing the same analysis every month without manual steps.",
+      "Combines and cleans files that are too large or messy for a spreadsheet, and repeats the same work every month.",
     lang: "python",
     snippet: `import pandas as pd
 
@@ -58,9 +58,9 @@ summary = df.groupby("month")["amount"].sum()`,
   {
     key: "excel",
     name: "Excel",
-    short: "Financial models, formulas and reporting.",
+    short: "Spreadsheets, formulas and reports.",
     finance:
-      "The final mile for most finance teams — structured tables, lookups, pivots and clear report layouts that people already know how to read.",
+      "Shows the final numbers in tables and reports that most finance teams already know how to read.",
     lang: "excel",
     snippet: `=SUMIFS(Txn[Amount],
         Txn[Month], $B$2,
@@ -69,9 +69,9 @@ summary = df.groupby("month")["amount"].sum()`,
   {
     key: "vba",
     name: "VBA",
-    short: "Automate repetitive Excel workflows.",
+    short: "Small programs that automate Excel.",
     finance:
-      "Automates the clicks: splitting a master sheet into files per department, formatting reports, and running a month-end routine with one button.",
+      "Does repeated clicks for you, such as splitting a sheet into one file per department or formatting a report.",
     lang: "vba",
     snippet: `For Each ws In ThisWorkbook.Worksheets
     ws.Range("A1").CurrentRegion _
@@ -81,9 +81,9 @@ Next ws`,
   {
     key: "word",
     name: "Word",
-    short: "Business documents and report templates.",
+    short: "Letters and report templates.",
     finance:
-      "Standardised templates and mail-merge documents for letters, summaries and narrative reports that sit alongside the numbers.",
+      "Fills names and amounts into letter templates automatically, a feature called mail merge.",
     lang: "text",
     snippet: `«Vendor_Name»
 Payment of ₹«Amount» for invoice «Invoice_No»
@@ -91,10 +91,10 @@ has been processed on «Payment_Date».`,
   },
   {
     key: "llm",
-    name: "LLMs",
-    short: "Assist with analysis, drafting and automation.",
+    name: "AI models",
+    short: "Help with analysis and writing.",
     finance:
-      "Speeds up drafting formulas, queries and commentary — always reviewed against the source numbers, never treated as the source of truth.",
+      "Helps draft formulas, queries and comments. The results are always checked against the original numbers.",
     lang: "text",
     snippet: `"Summarise the three largest
 variances against budget for March
@@ -123,45 +123,45 @@ export const stages: Stage[] = [
     key: "source",
     n: "01",
     label: "Source data",
-    what: "Where the numbers already live. Nothing changes in your accounting system — the workflow only reads from it.",
-    input: "Your existing systems",
-    output: "Raw exports",
+    what: "Where the numbers already are. The process only reads this data and does not change it.",
+    input: "Your current systems",
+    output: "Raw data",
     tools: [],
-    sources: ["Accounting / ERP database", "Monthly Excel & CSV exports", "Bank and payment statements"],
+    sources: ["Accounting software", "Monthly Excel and CSV files", "Bank and payment statements"],
   },
   {
     key: "extract",
     n: "02",
-    label: "Extract",
-    what: "Only the records the report needs are pulled out — the right period, the right accounts — and linked to customers or cost centres.",
+    label: "Get the data",
+    what: "Only the records the report needs are pulled out, such as the right month and accounts.",
     input: "Database tables",
-    output: "One report-ready dataset",
+    output: "One set of data for the report",
     tools: ["sql"],
   },
   {
     key: "clean",
     n: "03",
-    label: "Clean & combine",
-    what: "Dates, names and amounts are standardised the same way every time. Duplicates are removed and odd rows are set aside for review.",
+    label: "Clean and combine",
+    what: "Dates, names and amounts are corrected the same way every time. Repeated rows are removed and unusual rows are kept aside for a person to check.",
     input: "Messy files",
-    output: "Consistent, trusted rows",
+    output: "Clean data",
     tools: ["pq", "python"],
   },
   {
     key: "calculate",
     n: "04",
     label: "Calculate",
-    what: "Totals, margins and comparisons are worked out with formulas that reconcile back to the source data.",
+    what: "Totals, profit and comparisons are calculated, and can be traced back to the original data.",
     input: "Clean rows",
-    output: "Financial figures",
+    output: "Final numbers",
     tools: ["excel", "vba"],
   },
   {
     key: "report",
     n: "05",
     label: "Report",
-    what: "Figures are laid out in a readable report with short commentary, ready to share — and it refreshes next month without being rebuilt.",
-    input: "Figures",
+    what: "The numbers appear in a clear report with short comments. Next month it can be updated without starting again.",
+    input: "Final numbers",
     output: "A report people can act on",
     tools: ["word", "llm"],
   },

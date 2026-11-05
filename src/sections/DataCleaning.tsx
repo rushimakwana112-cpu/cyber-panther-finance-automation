@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { DemoTag } from "../components/DemoTag";
 import { Icon, type IconName } from "../components/Icon";
-import { Section } from "../components/Section";
 import {
   byCustomer,
   changeLog,
@@ -25,31 +24,31 @@ const steps: { key: string; label: string; icon: IconName; what: string }[] = [
     key: "raw",
     label: "Raw data",
     icon: "file",
-    what: "An export as it really arrives: mixed date formats, stray spaces, amounts typed as text and a duplicated row. Select an issue below to highlight it.",
+    what: "Data as it often arrives: mixed date formats, extra spaces, numbers saved as text and a repeated row. Select a problem below to highlight it.",
   },
   {
     key: "clean",
-    label: "Clean & transform",
+    label: "Clean the data",
     icon: "filter",
-    what: "Each field is fixed by the same rule every time. Nothing is silently dropped — the duplicate is removed and the incomplete row is held for review.",
+    what: "Each column is fixed by the same rule every time. The repeated row is removed, and the incomplete row is kept aside for a person to check.",
   },
   {
     key: "analyze",
-    label: "Analyze",
+    label: "Add it up",
     icon: "calc",
-    what: "Clean rows are summarised: net sales by customer, with the refund kept separate, and totals that reconcile back to the source.",
+    what: "The clean rows are added up by customer, with refunds shown separately. The totals can be traced back to the original data.",
   },
   {
     key: "report",
     label: "Report",
     icon: "report",
-    what: "The steps are saved once, so next month’s export runs through the same rules and the report refreshes without being rebuilt.",
+    what: "The steps are saved, so next month's data follows the same rules and the report updates without starting again.",
   },
   {
     key: "insight",
-    label: "Business insights",
+    label: "The answer",
     icon: "insight",
-    what: "The output is a short, readable answer a business owner can act on — not another spreadsheet to decode.",
+    what: "The result is a short answer a business owner can understand and use.",
   },
 ];
 
@@ -332,14 +331,7 @@ export function DataCleaning() {
   const step = steps[current];
 
   return (
-    <Section
-      id="process"
-      index="03"
-      eyebrow="Data cleaning, step by step"
-      title="From messy export to a clear answer."
-      intro="A small example of the work, on fictional records. Press Transform to watch seven raw rows become a reliable report, then click any stage to look closer."
-      className="pipeline"
-    >
+    <div className="pipeline">
       <div className="pipe">
         <div className="pipe__bar">
           <ol className="flow" aria-label="Transformation stages">
@@ -374,11 +366,11 @@ export function DataCleaning() {
               <button className="btn btn--primary" onClick={run} disabled={running} aria-busy={running}>
                 {running ? (
                   <>
-                    <span className="spinner" aria-hidden="true" /> Transforming…
+                    <span className="spinner" aria-hidden="true" /> Cleaning…
                   </>
                 ) : (
                   <>
-                    <Icon name="play" size={14} /> Transform data
+                    <Icon name="play" size={14} /> Clean the data
                   </>
                 )}
               </button>
@@ -396,13 +388,13 @@ export function DataCleaning() {
             </p>
             <h3>{step.label}</h3>
             <p>{step.what}</p>
-            <DemoTag>Illustrative · fictional records</DemoTag>
+            <DemoTag>Example · made-up data</DemoTag>
           </div>
           <div className="pipe__view" key={current}>
             <View />
           </div>
         </div>
       </div>
-    </Section>
+    </div>
   );
 }

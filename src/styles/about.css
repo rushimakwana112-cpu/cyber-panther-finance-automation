@@ -1,0 +1,353 @@
+/* About Me: the approved Concept C story. Everything is prefixed ab- so it cannot affect other pages. */
+
+.ab-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(92svh - var(--header-h));
+  padding-block: 40px 72px;
+}
+.ab-who {
+  margin-bottom: 22px;
+  color: var(--blue);
+  font: 500 0.78rem var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: abUp 0.9s var(--ease) both;
+}
+.ab-hero h1 {
+  max-width: 18ch;
+  font-size: clamp(2.5rem, 1.2rem + 5vw, 6rem);
+  font-weight: 500;
+  line-height: 1.03;
+  letter-spacing: -0.046em;
+}
+.ab-w {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0.001;
+  transform: translateY(0.32em);
+  animation: abUp 0.9s var(--ease) forwards;
+  animation-delay: calc(var(--i) * 48ms);
+}
+.ab-w.dim {
+  color: var(--text-3);
+}
+.ab-w.hi {
+  color: var(--blue);
+}
+@keyframes abUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.ab-intro {
+  max-width: 50ch;
+  margin-top: 30px;
+  color: var(--text-2);
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.22rem);
+  animation: abUp 0.9s var(--ease) 0.9s both;
+}
+.ab-cue {
+  position: absolute;
+  bottom: 0;
+  left: var(--gutter);
+  width: 1px;
+  height: 56px;
+  overflow: hidden;
+  background: var(--line);
+}
+.ab-cue::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--blue);
+  animation: abCue 2.4s var(--ease) infinite;
+}
+@keyframes abCue {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.ab-journey {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+}
+.ab-stage {
+  position: sticky;
+  top: var(--header-h);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100svh - var(--header-h));
+}
+.ab-stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.ab-dot {
+  transition:
+    transform 1.1s var(--ease),
+    fill 0.8s;
+}
+.ab-link {
+  transition: opacity 0.9s;
+}
+.ab-cap {
+  display: flex;
+  gap: 18px;
+  margin-top: 20px;
+  color: var(--text-3);
+  font: 500 0.68rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ab-cap span {
+  transition: color 0.5s;
+}
+.ab-cap span.on {
+  color: var(--blue);
+}
+
+.ab-path {
+  position: relative;
+  padding-left: clamp(28px, 3vw, 44px);
+  padding-block: 12svh;
+}
+.ab-path::before,
+.ab-fill {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--line);
+}
+.ab-fill {
+  bottom: auto;
+  height: calc(var(--p, 0) * 100%);
+  background: linear-gradient(var(--blue), var(--purple));
+}
+.ab-ch {
+  min-height: 58svh;
+  padding-block: 6svh;
+  opacity: 0.5;
+  transition: opacity 0.6s;
+}
+.ab-ch.on,
+.ab-stop.on {
+  opacity: 1;
+}
+.ab-ch h2 {
+  margin-bottom: 12px;
+  color: var(--blue);
+  font: 500 0.72rem var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ab-ch p {
+  color: var(--text);
+  font-size: clamp(1.3rem, 1.08rem + 0.9vw, 1.85rem);
+  line-height: 1.32;
+  letter-spacing: -0.018em;
+}
+.ab-ch p + p {
+  margin-top: 0.8em;
+}
+.ab-ch--belief {
+  min-height: 48svh;
+}
+.ab-ch--belief p {
+  font-size: clamp(1.65rem, 1.2rem + 1.7vw, 2.7rem);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.032em;
+}
+.ab-stop {
+  position: relative;
+  margin-block: 2svh 8svh;
+  opacity: 0.72;
+  transition: opacity 0.6s;
+}
+.ab-stop::before {
+  content: "";
+  position: absolute;
+  top: 0.42em;
+  left: calc(-1 * clamp(28px, 3vw, 44px) - 5px);
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 0 5px var(--bg);
+}
+.ab-stop--now::before {
+  background: var(--bg);
+  box-shadow:
+    0 0 0 5px var(--bg),
+    inset 0 0 0 2px var(--purple);
+}
+.ab-stop__s {
+  color: var(--blue);
+  font: 500 0.68rem var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.ab-stop--now .ab-stop__s {
+  color: var(--violet);
+}
+.ab-stop h3 {
+  margin-top: 6px;
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.ab-stop__i {
+  color: var(--text-3);
+  font-size: 0.9rem;
+}
+.ab-stop__a {
+  max-width: 46ch;
+  margin-top: 6px;
+  color: var(--text-2);
+  font-size: 0.9rem;
+}
+
+.ab-close {
+  display: flex;
+  align-items: center;
+  min-height: 90svh;
+  padding-block: 96px;
+  border-top: 1px solid var(--line);
+  background:
+    radial-gradient(70% 70% at 15% 100%, rgba(32, 197, 255, 0.09), transparent 70%),
+    var(--bg-2);
+}
+.ab-close > .container {
+  width: 100%;
+}
+.ab-close h2 {
+  font-size: clamp(2.2rem, 1rem + 3.7vw, 4.7rem);
+  font-weight: 500;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+.ab-close h2 span {
+  display: block;
+  opacity: 0.15;
+  transition: opacity 1s 0.1s;
+}
+.ab-close h2 span:first-child {
+  color: var(--text-2);
+}
+.ab-close h2 span + span {
+  transition-delay: 0.55s;
+}
+.ab-close.on h2 span {
+  opacity: 1;
+}
+.ab-close__line {
+  max-width: 50ch;
+  margin-top: 26px;
+  color: var(--text-2);
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.22rem);
+  text-wrap: balance;
+}
+.ab-go {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 36px;
+  padding-bottom: 6px;
+  font-size: 1.02rem;
+}
+.ab-go::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease) 1s;
+}
+.ab-close.on .ab-go::after {
+  transform: none;
+}
+.ab-go svg {
+  flex: none;
+  color: var(--blue);
+  transition: transform 0.35s var(--ease);
+}
+.ab-go:hover svg {
+  transform: translateX(5px);
+}
+
+@media (max-width: 860px) {
+  .ab-journey {
+    display: block;
+  }
+  .ab-stage {
+    z-index: 2;
+    height: auto;
+    margin-inline: calc(-1 * var(--gutter));
+    padding: 10px var(--gutter);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .ab-stage svg {
+    height: 96px;
+  }
+  .ab-cap {
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 0.58rem;
+  }
+  .ab-path {
+    padding-block: 5svh;
+  }
+  .ab-ch,
+  .ab-ch--belief {
+    min-height: 0;
+    padding-block: 5svh;
+  }
+  .ab-stop {
+    margin-block: 0 5svh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ab-who,
+  .ab-w,
+  .ab-intro {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .ab-cue::after {
+    animation: none;
+  }
+  .ab-dot,
+  .ab-link,
+  .ab-cap span,
+  .ab-ch,
+  .ab-stop,
+  .ab-close h2 span,
+  .ab-go::after,
+  .ab-go svg {
+    transition: none;
+  }
+}

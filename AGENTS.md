@@ -1,19 +1,20 @@
 # AGENTS.md — handoff guide for AI assistants (and humans)
 
 Read this before changing anything. It explains what this project is, where it lives, how it is
-built, deployed and secured, and the rules the owner cares about. Last updated: 11 Oct 2026.
+built, deployed and secured, and the rules the owner cares about. Last updated: 6 Nov 2026.
 
 ---
 
 ## 1. What this is
 
-**Cyber Panther — Finance & Automation** is the portfolio and lead-generation website of **Rushi**:
-Accountant · Financial Data Analyst · Financial Automation Specialist. Featured service: **SQL Data
-Extraction & Reporting**. Tools: SQL, Python, Excel, Word, VBA, Power Query, LLMs (exactly these seven).
+**Cyber Panther — Finance & Automation** is the professional portfolio of **Rushi Makwana**, for recruiters and employers as well as businesses.
+Positioning: Finance | Accounting | Payroll Operations | Automation | Data Analytics. It is not a freelancer marketplace or AI agency site: no pricing, packages or hourly rates.
 
-- Headline: "Turn Financial Data Into Business Intelligence."
-- Purpose: show competence through interactive demos and turn visitors into enquiries via the contact form.
-- Audience: business owners, finance teams, accounting practices; Indian market (₹, lakh/crore formatting).
+- Home headline: "Finance Expertise. Intelligent Automation. Real Business Impact." Main message: "Transforming Finance Operations Through Intelligent Automation."
+- The public portfolio contains ONLY three company case studies: MPR Checker, Auto Payroll Dashboard, Payroll AI Assistant. Never add private Claude Skills or other internal tools, and never invent projects.
+- **Plain language is required (owner's request, Nov 2026):** write so a non-technical person and a professional can both follow. Use everyday words first and explain a technical term the first time it appears.
+- **Ask Panther** (`src/content/askPanther.ts`, `src/sections/AskPanther.tsx`) is a rule-based site guide that runs in the browser with approved answers only. It is not an AI model and uses no API. Keep it honest: it says so when it has no answer.
+- Keep generic: portal and bank names, employer names, internal security configuration, margin formula, file names. Cyber Panther is the website identity. Do not use the name Blue Panther on this site.
 
 | Thing | Where |
 | --- | --- |
@@ -33,7 +34,7 @@ The same URL is shared publicly (e.g. LinkedIn). Redeploys never change it — d
 3. **Never claim something worked unless verified** (a deploy, an email, a test). The contact form must never say "sent" unless the server confirmed it.
 4. **Never put secrets in the repo or in `VITE_*` variables** (those ship to the browser). The repo is public.
 5. **Never force-push, never overwrite unrelated work.** Commit with clear messages.
-6. Design: minimalist fintech — dark navy/black, electric blue primary, purple used sparingly. No panther/animal imagery, no neon overload, no glassmorphism everywhere (see §8).
+6. Design: minimalist fintech — dark navy/black, electric blue primary, purple used sparingly. The owner's panther logo (`src/assets/panther-logo.png`) is the site logo, chosen by the owner in Nov 2026; do not add other animal imagery. No neon overload, no glassmorphism everywhere (see §8).
 7. Respect accessibility (keyboard, reduced motion) and mobile layouts on every change.
 
 ## 3. Tech stack
@@ -60,50 +61,46 @@ scripts/
   og/og-image.html + og/render-og.mjs  share-image design; `node scripts/og/render-og.mjs` re-renders public/og-image.png
 tests/contact.test.mjs  11 tests for the function (node:test)
 src/
-  content/           ← EDIT COPY HERE: site.ts (brand, nav, budgets, contact config), services.ts,
-                       tools.ts (7 tools + 5 workflow stages), projects.ts, strengths.ts
+  pages/             Home, Projects, Capabilities, OtherPages (About, Technology, Security, Personal)
+  content/           ← EDIT COPY HERE: site.ts (brand, nav, contact config), projects.ts (3 case studies),
+                       capabilities.ts, misc.ts, tools.ts (workflow map)
   data/              fictional demo datasets: finance.ts (hero dashboard), cleaning.ts, demos.ts
   lib/               format.ts (₹, lakh/crore), hooks.ts (tweens, in-view, reduced motion), contact.ts
   components/        Header, Footer, Section, LineChart, Code, Icon, Logo, DemoTag
-  sections/          Hero, Dashboard, Strengths, Workflow, DataCleaning, FeaturedService,
-                     Portfolio (+ demos/JoinDemo, RefreshDemo, MarginDemo), About, Contact
+  sections/          Dashboard, Workflow, DataCleaning, Contact + demos/ (SqlConsole, JoinDemo, RefreshDemo,
+                     MarginDemo, PayrollChatDemo, MprCheckDemo, PayrollControlDemo)
   styles/            tokens.css · base.css · components.css · sections.css
 ```
 
-## 5. Page structure (section ids matter — nav and buttons link to them)
+## 5. Page structure (hash routes, in `src/lib/route.ts`)
 
-| # | id | Content |
+| Route | File | Content |
 | --- | --- | --- |
-| — | `home` | Hero: roles, headline, lead, CTAs (Work With Me → `#contact`, Explore Services → `#services`), interactive dashboard (metric tabs, period switch Q4/H2/FY, pinnable chart tooltips, expense mix) |
-| 01 | `strengths` | Accountant / Financial Data Analyst / Financial Automation Specialist |
-| 02 | `workflow` | "Tools I know" automation map: Source → Extract (SQL) → Clean & combine (Power Query, Python) → Calculate (Excel, VBA) → Report (Word, LLMs); walkthrough button |
-| 03 | `process` | Data-cleaning demo: Raw → Clean & transform → Analyze → Report → Business insights |
-| 04 | `services` | Featured SQL service + live SQL console demo + "Also available" list; "Discuss This Service" preselects the form |
-| 05 | `portfolio` | 3 tabbed demo projects (problem / solution / tools / try it) |
-| 06 | `ai-projects` | Applied-AI case studies (`src/content/aiProjects.ts`; tabs appear when >1). First: Payroll AI Assistant + chat demo on fictional data (`src/data/payrollBot.ts`) |
-| 07 | `about` | "Hi, I'm Rushi" + principles + applied-AI learning paragraph |
-| 08 | `contact` | Enquiry form |
+| `#/` | `src/pages/Home.tsx` | Hero + compact dashboard, project cards, capabilities, demo tiles, two contact paths |
+| `#/about` | `pages/About.tsx`, `styles/about.css` | Scrolling personal story from `content/about.ts` (approved Concept C). No employers, dates or resume content |
+| `#/projects`, `#/projects/<id>` | `pages/Projects.tsx` | Case studies from `content/projects.ts`; diagrams in `components/Architecture.tsx` |
+| `#/capabilities`, `#/capabilities/<demo>` | `pages/Capabilities.tsx` | 8 capabilities + tabbed live demos |
+| `#/technology` | `pages/OtherPages.tsx` | Tool groups + workflow map |
+| `#/security` | `pages/OtherPages.tsx` | Approach and principles. Do not disclose internal security configuration |
+| `#/personal` | `pages/OtherPages.tsx` | Synk, Just Go Fit, Compliance Copilot |
+| `#/contact/<opportunity or automation>/<topic>` | `sections/Contact.tsx` | Two-path form using the same `api/contact.ts` |
 
-Nav items and section→nav aliases live in `src/content/site.ts` (`nav`, `navAliases`).
-"Discuss" buttons call `goToContact(serviceId)` (`src/lib/contact.ts`), which dispatches `cp:select-service`.
+Old one-page links (`#contact`, `#services`, ...) are mapped to the new routes in `route.ts`.
 
-## 6. Common edits (where to change what)
+## 6. Common edits
 
 | Want to change | Edit |
 | --- | --- |
-| Headline, lead text, audience line, roles | `src/content/site.ts` → `brand` |
-| Contact form budget ranges | `src/content/site.ts` → `budgets` (current: Under ₹5,000 / ₹5,000–15,000 / ₹15,000–30,000 / Above ₹30,000 / Not sure yet) |
-| Services (featured + list + form dropdown) | `src/content/services.ts` (exactly one `featured: true`) |
-| Tool descriptions/snippets, workflow stages | `src/content/tools.ts` |
-| AI project case studies | `src/content/aiProjects.ts` (demos in `src/sections/demos/`) |
-| Portfolio projects text | `src/content/projects.ts` (interactive demo components in `src/sections/demos/`) |
-| Social links in footer | `src/content/site.ts` → `socials` (empty = hidden) |
+| Headline, positioning, nav, contact options | `src/content/site.ts` |
+| Case studies | `src/content/projects.ts` (demos in `src/sections/demos/`, data in `src/data/caseDemos.ts`) |
+| Capabilities and demo list | `src/content/capabilities.ts` |
+| About Me story and course milestones | `src/content/about.ts` |
+| Technology, approach, personal projects | `src/content/misc.ts` |
+| Ask Panther answers | `src/content/askPanther.ts` (tests in `tests/askPanther.test.mjs`) |
 | Demo numbers | `src/data/*.ts` (keep totals consistent) |
-| Colours/spacing/type | `src/styles/tokens.css` |
-| Security headers / CSP | `vercel.json` (and re-test — see §9) |
-| Social share preview | design `scripts/og/og-image.html` → `node scripts/og/render-og.mjs`; tags in `index.html`. After deploying, refresh LinkedIn's cache at linkedin.com/post-inspector |
-
-After any edit: build, test, check in a browser, commit, push, deploy (§7).
+| Colours/spacing/type | `src/styles/tokens.css`; page layouts in `src/styles/pages.css` |
+| Security headers / CSP | `vercel.json` (and re-test) |
+| Social share preview | `scripts/og/og-image.html` then `node scripts/og/render-og.mjs` |
 
 ## 7. Run, build, test, deploy
 
@@ -199,15 +196,12 @@ stronger spam protection); Resend test sender deliverability (verify a domain); 
 | `af477d8` | Contact email function, Vercel config, security headers, dependency fixes, tests |
 | `cc0cd42` | Lowered contact-form budget ranges |
 | `ea9530f` | Social share image + og/twitter tags (LinkedIn preview) |
-| (next) | Folder tidy-up: removed generated `Cyber Panther.html` from the repo (now optional `npm run build:single`) |
+| `55988e3` | Folder tidy-up: removed generated `Cyber Panther.html` from the repo (now optional `npm run build:single`) |
+| (Nov 2026) | Upgrade merged from `v2`: eight views, three case studies, plain language, Ask Panther, About story |
 
 Also: an older copy of the site was published as a private claude.ai artifact (https://claude.ai/artifact/FYxQsXED1HtXmx85DRn2Jh). It is **stale** and its form cannot send — the Vercel URL is the real site.
 
 ## 12. Open ideas / not done yet (ask the owner before doing)
-
-- **Cyber Panther v2 is in progress** on branch `v2`, in the separate folder `C:\My Work\test\cyber panther v2`
-  (a git worktree). Build v2 there, not here. v1 (`main`, this folder) stays live until the owner says v2 is ready;
-  then merge `v2` into `main` here and deploy `--prod` from this folder (see AGENTS.md §0 in the v2 folder).
 
 - Visitor analytics: enable **Vercel Web Analytics** (cookie-less; needs a small code addition + redeploy; works with the current CSP because it is same-origin under `/_vercel/insights`). Owner asked about this and chose to wait.
 - Connect GitHub → Vercel auto-deploys.

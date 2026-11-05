@@ -86,7 +86,7 @@ export function RefreshDemo() {
             </div>
           ))}
         </div>
-        {inFolder > loaded && !busy && <p className="demo__note">New file detected — refresh to include it.</p>}
+        {inFolder > loaded && !busy && <p className="demo__note">New file found. Update the report to include it.</p>}
       </div>
     </div>
   );

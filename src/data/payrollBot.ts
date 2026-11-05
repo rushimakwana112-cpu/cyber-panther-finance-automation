@@ -40,7 +40,7 @@ export function monthTotals(month: PayRow["month"]) {
   };
 }
 
-/** Margin = base sales − CTC; margin % on CTC (the company formula). Sorted best first. */
+/** Margin = base sales − CTC; margin % on CTC. Sorted best first. */
 export function woMargins(month: PayRow["month"]) {
   return Object.keys(invoicesByWo)
     .map((wo) => {
