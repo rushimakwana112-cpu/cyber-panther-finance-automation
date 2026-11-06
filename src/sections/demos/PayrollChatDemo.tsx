@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { Code } from "../../components/Code";
 import { Icon } from "../../components/Icon";
 import { monthTotals, payRows, woMargins } from "../../data/payrollBot";
 import { percent, rupees, rupeesShort } from "../../lib/format";
 import { rovingKey, useReducedMotion } from "../../lib/hooks";
 
-// Mirrors the real assistant's answer layout: summary, KPI tiles, then Chart / Table / SQL / Insights tabs.
+// A simple example of an answer: summary, key figures, then Chart / Table / Insights tabs.
 type Answer = {
   q: string;
-  sql: string;
   text: string;
   kpis: { k: string; v: string }[];
   bars?: { label: string; value: number }[];
@@ -22,8 +20,8 @@ const sep = monthTotals("Sep-2026");
 const aug = monthTotals("Aug-2026");
 const sepWo = woMargins("Sep-2026");
 const sum = (xs: number[]) => xs.reduce((s, x) => s + x, 0);
-const sepBase = sum(sepWo.map((w) => w.base));
-const sepMargin = sepBase - sep.ctc;
+const sepSales = sum(sepWo.map((w) => w.sales));
+const sepMargin = sepSales - sep.ctc;
 
 function changeInsight() {
   const augRows = payRows.filter((r) => r.month === "Aug-2026");
@@ -36,48 +34,32 @@ function changeInsight() {
 const answers: Answer[] = [
   {
     q: "Give me projection of Oct-26",
-    sql: `SELECT WorkOrder, Employee, CTC,
-       InvoiceAmount * 100.0 / 118 AS BaseSales
-FROM   payroll
-WHERE  Month = ? AND Year = ?;   -- 9, 2026
--- every running work order is carried into Oct-2026`,
-    text: `Projected for Oct-2026 (as on 30-Sep-26, based on Sep-2026): CTC ${rupees(sep.ctc)} · Base sales ${rupees(sepBase)} · Margin ${rupees(sepMargin)} (${percent((sepMargin / sep.ctc) * 100)} on CTC) · ${sepWo.length} work orders running.`,
+    text: `Projected for Oct-2026, based on Sep-2026: CTC ${rupees(sep.ctc)} · Sales ${rupees(sepSales)} · Margin ${rupees(sepMargin)} (${percent((sepMargin / sepSales) * 100)}) · ${sepWo.length} work orders running.`,
     kpis: [
       { k: "Projected CTC", v: rupeesShort(sep.ctc) },
-      { k: "Projected base sales", v: rupeesShort(sepBase) },
+      { k: "Projected sales", v: rupeesShort(sepSales) },
       { k: "Projected margin", v: rupeesShort(sepMargin) },
-      { k: "Margin % (on CTC)", v: percent((sepMargin / sep.ctc) * 100) },
+      { k: "Margin %", v: percent((sepMargin / sepSales) * 100) },
     ],
-    bars: sepWo.map((w) => ({ label: w.wo, value: w.base })),
-    cols: ["Work order", "Base sales", "CTC", "Margin"],
-    rows: sepWo.map((w) => [w.wo, rupees(w.base), rupees(w.ctc), rupees(w.margin)]),
+    bars: sepWo.map((w) => ({ label: w.wo, value: w.sales })),
+    cols: ["Work order", "Sales", "CTC", "Margin"],
+    rows: sepWo.map((w) => [w.wo, rupees(w.sales), rupees(w.ctc), rupees(w.margin)]),
     insight: `${sepWo[0].wo} brings in most of the expected profit. ${sepWo[sepWo.length - 1].wo} is close to making no profit, so a salary increase there could cause a loss.`,
   },
   {
     q: "Which work order has the highest margin in Sep-26?",
-    sql: `SELECT WorkOrder,
-       MAX(InvoiceAmount) * 100.0 / 118 AS BaseSales,
-       SUM(CTC) AS CTC
-FROM   payroll
-WHERE  Month = ? AND Year = ?
-GROUP  BY WorkOrder;             -- 9, 2026`,
-    text: `${sepWo[0].wo} has the highest margin in Sep-2026 at ${percent(sepWo[0].pct)} on CTC.`,
+    text: `${sepWo[0].wo} has the highest margin in Sep-2026 at ${percent(sepWo[0].pct)}.`,
     kpis: [
       { k: "Best work order", v: sepWo[0].wo },
       { k: "Its margin %", v: percent(sepWo[0].pct) },
     ],
     bars: sepWo.map((w) => ({ label: w.wo, value: w.margin })),
-    cols: ["Work order", "Base sales", "CTC", "Margin %"],
-    rows: sepWo.map((w) => [w.wo, rupees(w.base), rupees(w.ctc), percent(w.pct)]),
-    insight: `${sepWo[sepWo.length - 1].wo} has a low margin of ${percent(sepWo[sepWo.length - 1].pct)} , so it is worth reviewing.`,
+    cols: ["Work order", "Sales", "CTC", "Margin %"],
+    rows: sepWo.map((w) => [w.wo, rupees(w.sales), rupees(w.ctc), percent(w.pct)]),
+    insight: `${sepWo[sepWo.length - 1].wo} has a low margin of ${percent(sepWo[sepWo.length - 1].pct)}, so it is worth reviewing.`,
   },
   {
     q: "Compare Aug-26 and Sep-26 CTC",
-    sql: `SELECT Month, COUNT(DISTINCT Employee) AS Employees,
-       SUM(CTC) AS CTC
-FROM   payroll
-WHERE  Year = ? AND Month IN (?, ?)
-GROUP  BY Month;                 -- 2026, 8, 9`,
     text: `CTC rose from ${rupees(aug.ctc)} to ${rupees(sep.ctc)}.`,
     kpis: [
       { k: "Change", v: rupeesShort(sep.ctc - aug.ctc) },
@@ -91,9 +73,6 @@ GROUP  BY Month;                 -- 2026, 8, 9`,
   {
     q: "List each employee’s salary for Sep-26 (for a user who can see totals only)",
     policy: "This user can see totals only",
-    sql: `SELECT SUM(GrossAmount) AS Gross, SUM(CTC) AS CTC
-FROM   payroll
-WHERE  Month = ? AND Year = ?;   -- 9, 2026`,
     text: "This user can see totals only, so individual salaries are hidden. Here is the Sep-2026 total instead.",
     kpis: [
       { k: "Gross", v: rupeesShort(sep.gross) },
@@ -106,10 +85,10 @@ WHERE  Month = ? AND Year = ?;   -- 9, 2026`,
 ];
 
 const steps = ["Question received", "Worked out what you are asking", "Found the data", "Answer written"];
-type View = "Chart" | "Table" | "SQL" | "Insights";
+type View = "Chart" | "Table" | "Insights";
 
 function AnswerView({ a }: { a: Answer }) {
-  const views: View[] = a.bars ? ["Chart", "Table", "SQL", "Insights"] : ["Table", "SQL", "Insights"];
+  const views: View[] = a.bars ? ["Chart", "Table", "Insights"] : ["Table", "Insights"];
   const [view, setView] = useState<View>(views[0]);
   const max = Math.max(...(a.bars ?? []).map((b) => Math.abs(b.value)), 1);
 
@@ -184,7 +163,6 @@ function AnswerView({ a }: { a: Answer }) {
             </table>
           </div>
         )}
-        {view === "SQL" && <Code lang="sql" label="Read-only SQL the assistant ran" code={a.sql} />}
         {view === "Insights" && <p className="chatdemo__insight">{a.insight}</p>}
       </div>
     </div>
@@ -213,7 +191,7 @@ export function PayrollChatDemo() {
     <div className="demo chatdemo">
       <div className="chatdemo__bar">
         <span className="chatdemo__dot" aria-hidden="true" />
-        <span className="mono">Demo copy · fictional rows · runs in your browser</span>
+        <span className="mono">Demo copy · made-up data · runs in your browser</span>
       </div>
       <p className="chatdemo__label">Try a question</p>
       <div className="chatdemo__qs">

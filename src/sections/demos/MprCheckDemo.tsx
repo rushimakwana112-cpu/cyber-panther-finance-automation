@@ -4,11 +4,11 @@ import { Icon } from "../../components/Icon";
 import { mprRows, outcomeOf, type Outcome } from "../../data/caseDemos";
 import { useReducedMotion } from "../../lib/hooks";
 
-const outcomes: Outcome[] = ["All clear", "Already ticked", "Unreadable", "Mismatched"];
-const tone: Record<Outcome, string> = { "All clear": "good", "Already ticked": "info", Unreadable: "warn", Mismatched: "bad" };
-const exceptions = mprRows.filter((r) => ["Unreadable", "Mismatched"].includes(outcomeOf(r)));
+const outcomes: Outcome[] = ["All clear", "Already approved", "Check by hand", "Mismatched"];
+const tone: Record<Outcome, string> = { "All clear": "good", "Already approved": "info", "Check by hand": "warn", Mismatched: "bad" };
+const exceptions = mprRows.filter((r) => ["Check by hand", "Mismatched"].includes(outcomeOf(r)));
 
-/** Fictional attendance check: run it, then act as the human reviewer on the exceptions. */
+/** Fictional document check: run it, then act as the human reviewer on the exceptions. */
 export function MprCheckDemo() {
   const [scanned, setScanned] = useState(0);
   const [running, setRunning] = useState(false);
@@ -42,7 +42,7 @@ export function MprCheckDemo() {
   const shown = mprRows.slice(0, scanned);
 
   return (
-    <div className="cdemo" role="region" aria-label="MPR check demo with fictional data">
+    <div className="cdemo" role="region" aria-label="Document check demo with made-up data">
       <div className="cdemo__bar">
         <DemoTag>Demo · made-up data</DemoTag>
         <button className="btn btn--primary btn--sm" onClick={run} disabled={running} aria-busy={running}>
@@ -55,8 +55,8 @@ export function MprCheckDemo() {
           <thead>
             <tr>
               <th>Employee</th>
-              <th className="r">Absent in MPR</th>
-              <th className="r">Absent in portal</th>
+              <th className="r">In document</th>
+              <th className="r">In system</th>
               <th>Could it be read?</th>
               <th>Result</th>
             </tr>
@@ -100,7 +100,7 @@ export function MprCheckDemo() {
                 <li key={r.code} className={isDone ? "is-done" : ""}>
                   <span>
                     <strong className="mono">{r.code}</strong>{" "}
-                    {outcomeOf(r) === "Unreadable" ? `The MPR could not be read. Portal shows ${r.portal}.` : `MPR shows ${r.mpr}, portal shows ${r.portal}.`}
+                    {outcomeOf(r) === "Check by hand" ? `The document could not be read. System shows ${r.portal}.` : `Document shows ${r.mpr}, system shows ${r.portal}.`}
                   </span>
                   <button
                     className="btn btn--ghost btn--sm"

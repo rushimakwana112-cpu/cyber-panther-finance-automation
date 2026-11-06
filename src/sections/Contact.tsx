@@ -78,6 +78,8 @@ export function Contact({ path: pathParam, topic: topicParam }: { path?: string;
   const shownAt = useRef(Date.now());
   const errors = validate(form);
   const p = paths[path];
+  // Job opportunities come first. The business path appears only through old links that ask for it.
+  const showPaths = pathParam === "automation";
 
   // Links such as "Discuss" on a capability open the right path with the area preselected.
   useEffect(() => {
@@ -171,8 +173,9 @@ export function Contact({ path: pathParam, topic: topicParam }: { path?: string;
 
   return (
     <>
-      <PageHead eyebrow="Contact" title="Let's start a conversation." lead="Choose the path that fits and I will reply by email." />
+      <PageHead eyebrow="Contact" title="Let's start a conversation." lead="I am open to job opportunities. Tell me about the role and I will reply by email." />
       <div className="container page-body">
+        {showPaths && (
         <div className="cpaths" role="tablist" aria-label="Reason for contacting">
           {order.map((id, i) => (
             <button
@@ -195,8 +198,9 @@ export function Contact({ path: pathParam, topic: topicParam }: { path?: string;
             </button>
           ))}
         </div>
+        )}
 
-        <div className="contact__grid" id="cpanel" role="tabpanel" aria-labelledby={`cpath-${path}`}>
+        <div className="contact__grid" id="cpanel" role={showPaths ? "tabpanel" : undefined} aria-labelledby={showPaths ? `cpath-${path}` : undefined}>
           <div className="contact__aside">
             <p>{p.intro}</p>
             <p className="contact__k">Helpful to include</p>

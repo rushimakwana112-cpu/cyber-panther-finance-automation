@@ -1,4 +1,4 @@
-import { brand, nav, socials } from "../content/site";
+import { brand, moreNav, nav, socials } from "../content/site";
 import { href } from "../lib/route";
 import { Icon, type IconName } from "./Icon";
 import { Logo } from "./Logo";
@@ -12,11 +12,11 @@ export function Footer() {
         <div>
           <Logo />
           <p className="footer__desc">
-            {brand.owner}. {brand.positioning.join(" · ")}.
+            {brand.positioning.join(" · ")}.
           </p>
         </div>
         <nav aria-label="Footer" className="footer__nav">
-          {nav.map((item) => (
+          {[...nav, ...moreNav].map((item) => (
             <a key={item.id} href={href.page(item.id)}>
               {item.label}
             </a>
@@ -36,7 +36,7 @@ export function Footer() {
       </div>
       <div className="container footer__base">
         <span>
-          © {new Date().getFullYear()} {brand.name}. All figures on this website are made up for demonstration.
+          © {new Date().getFullYear()} {brand.owner}, {brand.name}. All figures on this website are made up for demonstration.
         </span>
       </div>
     </footer>

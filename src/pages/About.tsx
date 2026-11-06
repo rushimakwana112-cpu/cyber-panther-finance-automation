@@ -161,6 +161,19 @@ export function About() {
         </div>
       </div>
 
+      <nav className="container ab-more" aria-label="More about how I work">
+        <span>More about how I work</span>
+        <a className="textlink" href={href.page("technology")}>
+          Technology <Icon name="arrow" size={15} />
+        </a>
+        <a className="textlink" href={href.page("security")}>
+          Security &amp; Approach <Icon name="arrow" size={15} />
+        </a>
+        <a className="textlink" href={href.page("personal")}>
+          Personal Projects <Icon name="arrow" size={15} />
+        </a>
+      </nav>
+
       <section className={`ab-close ${closed ? "on" : ""}`} ref={closing} aria-label="Closing statement">
         <div className="container">
           <h2>

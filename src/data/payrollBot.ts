@@ -1,7 +1,5 @@
-// Fictional payroll data for the Payroll AI Assistant demo. Every answer in the demo is
-// calculated from these rows, so the totals always reconcile.
-
-export const GST_RATE = 18;
+// Fictional payroll data for the Finance Operations Intelligence demo. Every answer in the demo is
+// calculated from these rows, so the totals always reconcile. This is a simple example, not a real method.
 
 export type PayRow = { emp: string; wo: string; month: "Aug-2026" | "Sep-2026"; gross: number; ctc: number };
 
@@ -21,14 +19,12 @@ export const payRows: PayRow[] = [
   { emp: "E107", wo: "WO-C03", month: "Sep-2026", gross: 21500, ctc: 24480 },
 ];
 
-/** Invoice value per work order per month, including GST. Base sales = invoice × 100 / 118. */
-export const invoicesByWo: Record<string, Record<PayRow["month"], number>> = {
-  "WO-A11": { "Aug-2026": 141600, "Sep-2026": 141600 },
-  "WO-B07": { "Aug-2026": 118000, "Sep-2026": 118000 },
-  "WO-C03": { "Aug-2026": 29500, "Sep-2026": 59000 },
+/** Made-up sales per work order per month. */
+export const salesByWo: Record<string, Record<PayRow["month"], number>> = {
+  "WO-A11": { "Aug-2026": 120000, "Sep-2026": 120000 },
+  "WO-B07": { "Aug-2026": 100000, "Sep-2026": 100000 },
+  "WO-C03": { "Aug-2026": 25000, "Sep-2026": 50000 },
 };
-
-export const baseSales = (invoice: number) => (invoice * 100) / (100 + GST_RATE);
 
 export function monthTotals(month: PayRow["month"]) {
   const rows = payRows.filter((r) => r.month === month);
@@ -40,13 +36,13 @@ export function monthTotals(month: PayRow["month"]) {
   };
 }
 
-/** Margin = base sales − CTC; margin % on CTC. Sorted best first. */
+/** Margin is what is left after cost, shown as a share of sales. Sorted best first. */
 export function woMargins(month: PayRow["month"]) {
-  return Object.keys(invoicesByWo)
+  return Object.keys(salesByWo)
     .map((wo) => {
       const ctc = payRows.filter((r) => r.month === month && r.wo === wo).reduce((s, r) => s + r.ctc, 0);
-      const base = baseSales(invoicesByWo[wo][month]);
-      return { wo, base, ctc, margin: base - ctc, pct: ((base - ctc) / ctc) * 100 };
+      const sales = salesByWo[wo][month];
+      return { wo, sales, ctc, margin: sales - ctc, pct: ((sales - ctc) / sales) * 100 };
     })
     .sort((a, b) => b.pct - a.pct);
 }

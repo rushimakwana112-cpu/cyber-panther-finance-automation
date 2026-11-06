@@ -23,7 +23,7 @@ const views: Record<DemoId, () => React.JSX.Element> = {
 
 const isDemo = (x?: string): x is DemoId => demoList.some((d) => d.id === x);
 
-export function Capabilities({ demo }: { demo?: string }) {
+export function Tools({ demo }: { demo?: string }) {
   const [active, setActive] = useState<DemoId>(isDemo(demo) ? demo : "dashboard");
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const area = useRef<HTMLElement>(null);
@@ -42,39 +42,12 @@ export function Capabilities({ demo }: { demo?: string }) {
 
   return (
     <>
-      <PageHead eyebrow="Capabilities" title="What I can do." lead="Practical skills from finance, accounting and payroll work. Each one links to a project or a demo you can try." />
-      <div className="container page-body">
-        <ul className="caps">
-          {capabilities.map((c, i) => (
-            <li key={c.id} className="stagger" style={{ "--i": i } as React.CSSProperties}>
-              <Icon name={c.icon} size={22} />
-              <h2>{c.title}</h2>
-              <p>{c.d}</p>
-              <div className="caps__links">
-                {c.project && (
-                  <a href={href.project(c.project)}>
-                    {projectById(c.project)?.title} <Icon name="arrow" size={13} />
-                  </a>
-                )}
-                {c.demo && (
-                  <a href={href.demo(c.demo)} onClick={() => c.demo === demo && area.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" })}>
-                    Try the demo <Icon name="arrow" size={13} />
-                  </a>
-                )}
-                <a href={href.automation(c.id)}>
-                  Discuss <Icon name="arrow" size={13} />
-                </a>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
+      <PageHead eyebrow="Finance tools" title="Finance tools you can try." lead="Small working demos from finance, accounting and payroll work. They use made-up data, so you can click anything." />
       <section className="demos" ref={area} aria-labelledby="demos-title">
         <div className="container">
-          <p className="eyebrow">Live demos</p>
+          <p className="eyebrow">Demos</p>
           <h2 id="demos-title" className="section__title">
-            Try it with made-up data.
+            Choose a demo.
           </h2>
           <p className="demos__note">These small examples show the kind of work involved. They are demos, not client or company projects.</p>
           <div className="dtabs" role="tablist" aria-label="Demos">
@@ -108,6 +81,30 @@ export function Capabilities({ demo }: { demo?: string }) {
           </div>
         </div>
       </section>
+      <div className="container page-body tools-caps">
+        <h2 className="section__title">What I can do.</h2>
+        <ul className="caps">
+          {capabilities.map((c, i) => (
+            <li key={c.id} className="stagger" style={{ "--i": i } as React.CSSProperties}>
+              <Icon name={c.icon} size={22} />
+              <h2>{c.title}</h2>
+              <p>{c.d}</p>
+              <div className="caps__links">
+                {c.project && (
+                  <a href={href.project(c.project)}>
+                    {projectById(c.project)?.title} <Icon name="arrow" size={13} />
+                  </a>
+                )}
+                {c.demo && (
+                  <a href={href.demo(c.demo)} onClick={() => c.demo === demo && area.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" })}>
+                    Try the demo <Icon name="arrow" size={13} />
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 }

@@ -3,32 +3,53 @@ import type { PageId } from "../lib/route";
 
 export const brand = {
   name: "Cyber Panther",
-  descriptor: "Finance & Automation",
   owner: "Rushi Makwana",
-  positioning: ["Finance", "Accounting", "Payroll Operations", "Automation", "Data Analytics"],
-  headline: ["Finance Expertise.", "Intelligent Automation.", "Real Business Impact."],
-  message: "Transforming Finance Operations Through Intelligent Automation.",
-  lead: "I work in finance, accounting and payroll, and I build tools that take over repetitive work, check for mistakes and make reports easier to read. I use tools such as Excel, Python, SQL and AI.",
+  positioning: ["Accountant", "Financial Data Analyst", "Financial Automation Specialist"],
+  headline: ["Turning Financial Operations", "into Intelligent Systems."],
+  lead: "I build systems for daily manual finance work, so the work gets done by the system, accurately and efficiently, and stays under my control.",
 };
+
+/** The three ways into the site, shown on the home page. */
+export const startingPoints: { n: string; title: string; d: string; to: PageId }[] = [
+  { n: "01", title: "Explore My Projects", d: "What I built, why it is useful and why it is better.", to: "projects" },
+  { n: "02", title: "Explore Finance Tools", d: "Try small working demos. They all use made-up data.", to: "tools" },
+  { n: "03", title: "Discover My Journey", d: "How accounting led me to data, automation and AI.", to: "about" },
+];
+
+/** The kind of change my systems make. Never add numbers unless the owner has measured and approved them. */
+export const manualVsSystem = [
+  { label: "Accurate", manual: "Small differences are easy to miss.", system: "The same checks run the same way every time." },
+  { label: "Efficient", manual: "The same work is repeated by hand.", system: "The system does the repeated work. People handle only what needs attention." },
+  { label: "In my control", manual: "Work is spread across many files.", system: "It runs from one place, and a person makes the final decision." },
+];
 
 export type NavItem = { id: PageId; label: string };
 
 export const nav: NavItem[] = [
   { id: "home", label: "Home" },
-  { id: "about", label: "About Me" },
   { id: "projects", label: "Projects" },
-  { id: "capabilities", label: "Capabilities" },
-  { id: "technology", label: "Technology" },
-  { id: "security", label: "Security & Approach" },
-  { id: "personal", label: "Personal Projects" },
+  { id: "tools", label: "Tools" },
+  { id: "ai-lab", label: "AI Lab" },
+  { id: "about", label: "About Me" },
   { id: "contact", label: "Contact" },
 ];
 
+/** Supporting pages: linked from the mobile menu, the footer and the pages they belong to. */
+export const moreNav: NavItem[] = [
+  { id: "technology", label: "Technology" },
+  { id: "security", label: "Security & Approach" },
+  { id: "personal", label: "Personal Projects" },
+];
+
+/** Which main menu item stays highlighted on a supporting page. */
+export const navParent: Partial<Record<PageId, PageId>> = { technology: "about", security: "about", personal: "projects" };
+
 export const pageTitles: Record<PageId, string> = {
-  home: "Finance, Payroll Operations & Automation",
+  home: "Finance, Data Analytics & Automation",
   about: "About Me",
   projects: "Projects",
-  capabilities: "Capabilities",
+  tools: "Finance Tools",
+  "ai-lab": "AI Lab",
   technology: "Technology",
   security: "Security & Approach",
   personal: "Personal Projects",

@@ -129,7 +129,7 @@ export function Workflow() {
                   ))}
                 </div>
               ) : (
-                <p className="wf__note">Your existing systems, read-only</p>
+                <p className="wf__note">Existing systems, read-only</p>
               )}
               {i < stages.length - 1 && (
                 <span className={`wf__link ${i < stageIdx ? "is-lit" : ""} ${i === stageIdx - 1 ? "is-flowing" : ""}`} aria-hidden="true">
@@ -168,7 +168,7 @@ export function Workflow() {
               <>
                 <div className="wf__toolhead">
                   <h4>Typical sources</h4>
-                  <span className="muted small">Read-only — nothing in your system changes.</span>
+                  <span className="muted small">Read-only — nothing in the system changes.</span>
                 </div>
                 <ul className="wf__sources">
                   {stage.sources?.map((src) => (

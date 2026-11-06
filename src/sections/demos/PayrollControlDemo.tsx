@@ -18,7 +18,7 @@ const steps = [
   { t: "Work-order summaries", out: groupLines((r) => r.wo).map(line) },
 ];
 
-/** Fictional control dashboard: one button drives every step, and results come from the rows. */
+/** Fictional control screen: shows each step in order, and results come from the rows. */
 export function PayrollControlDemo() {
   const [reached, setReached] = useState(0);
   const [running, setRunning] = useState(false);
@@ -77,7 +77,7 @@ export function PayrollControlDemo() {
         </ol>
         <div className="control__out" aria-live="polite">
           {reached === 0 ? (
-            <p className="muted">Press Run payroll. One button runs every step, and you can then select a step to see its result.</p>
+            <p className="muted">Press Run payroll to see each step in order. You can then select a step to see its result.</p>
           ) : (
             <>
               <p className="cdemo__k">{current.t}</p>

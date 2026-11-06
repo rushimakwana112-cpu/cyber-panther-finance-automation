@@ -4,10 +4,11 @@ import { Header } from "./components/Header";
 import { pageTitles } from "./content/site";
 import { useRoute, type Route } from "./lib/route";
 import { About } from "./pages/About";
-import { Capabilities } from "./pages/Capabilities";
+import { AiLab } from "./pages/AiLab";
 import { Home } from "./pages/Home";
 import { Personal, SecurityApproach, Technology } from "./pages/OtherPages";
 import { Projects } from "./pages/Projects";
+import { Tools } from "./pages/Tools";
 import { AskPanther } from "./sections/AskPanther";
 import { Contact } from "./sections/Contact";
 
@@ -17,8 +18,10 @@ function View({ route }: { route: Route }) {
       return <About />;
     case "projects":
       return <Projects id={route.param} />;
-    case "capabilities":
-      return <Capabilities demo={route.param} />;
+    case "tools":
+      return <Tools demo={route.param} />;
+    case "ai-lab":
+      return <AiLab />;
     case "technology":
       return <Technology />;
     case "security":
@@ -40,7 +43,7 @@ export function App() {
 
   // Each view starts at the top, and focus moves for keyboard and screen-reader users.
   useEffect(() => {
-    document.title = route.page === "home" ? `Cyber Panther | ${pageTitles.home}` : `${pageTitles[route.page]} | Cyber Panther`;
+    document.title = route.page === "home" ? `Rushi Makwana | ${pageTitles.home}` : `${pageTitles[route.page]} | Rushi Makwana`;
     if (first.current) {
       first.current = false;
       return;

@@ -11,8 +11,8 @@ export function Logo() {
     <span className="logo">
       <LogoMark />
       <span className="logo__text">
-        <span className="logo__name">{brand.name}</span>
-        <span className="logo__desc">{brand.descriptor}</span>
+        <span className="logo__name">{brand.owner}</span>
+        <span className="logo__desc">{brand.name}</span>
       </span>
     </span>
   );

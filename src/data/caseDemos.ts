@@ -1,8 +1,8 @@
-// Fictional rows for the MPR Checker and Auto Payroll Dashboard demos.
+// Fictional rows for the Document Matcher and Auto Payroll Dashboard demos.
 // Every outcome and total in those demos is calculated from these rows.
 
 export type MprRow = { code: string; mpr: number | null; portal: number; readable: "Yes" | "Partly" | "No"; ticked: boolean };
-export type Outcome = "All clear" | "Already ticked" | "Unreadable" | "Mismatched";
+export type Outcome = "All clear" | "Already approved" | "Check by hand" | "Mismatched";
 
 export const mprRows: MprRow[] = [
   { code: "E-1001", mpr: 1, portal: 1, readable: "Yes", ticked: false },
@@ -15,9 +15,9 @@ export const mprRows: MprRow[] = [
 ];
 
 export function outcomeOf(r: MprRow): Outcome {
-  if (r.readable === "No" || r.mpr === null) return "Unreadable";
+  if (r.readable === "No" || r.mpr === null) return "Check by hand";
   if (r.mpr !== r.portal) return "Mismatched";
-  return r.ticked ? "Already ticked" : "All clear";
+  return r.ticked ? "Already approved" : "All clear";
 }
 
 export type PayLine = { code: string; category: "Category A" | "Category B"; bank: "Same bank" | "NEFT/RTGS"; wo: string; net: number; pfOk: boolean };

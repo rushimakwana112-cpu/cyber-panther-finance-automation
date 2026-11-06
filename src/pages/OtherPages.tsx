@@ -1,6 +1,9 @@
 import { Icon } from "../components/Icon";
+import { NodeStory } from "../components/NodeStory";
 import { PageHead } from "../components/PageHead";
+import { StageBadge } from "../components/StageBadge";
 import { approachSteps, personalProjects, principles, techGroups } from "../content/misc";
+import { stories } from "../content/stories";
 import { Workflow } from "../sections/Workflow";
 
 export function Technology() {
@@ -27,6 +30,7 @@ export function Technology() {
           ))}
         </ul>
       </div>
+      <NodeStory story={stories.ecosystem} />
       <Workflow />
     </>
   );
@@ -62,35 +66,44 @@ export function SecurityApproach() {
   );
 }
 
+export function PersonalList() {
+  return (
+    <ul className="personal">
+      {personalProjects.map((p, i) => (
+        <li key={p.id} className="stagger" style={{ "--i": i } as React.CSSProperties}>
+          <p className="personal__stage">
+            <StageBadge stage={p.stage} />
+          </p>
+          <p className="personal__kind">{p.kind}</p>
+          <h2>{p.title}</h2>
+          <p>{p.d}</p>
+          <div className="pcard__tags">
+            {p.tags.map((t) => (
+              <span key={t} className="tag">
+                {t}
+              </span>
+            ))}
+          </div>
+          {p.link && (
+            <a className="textlink" href={p.link.href} target="_blank" rel="noopener noreferrer">
+              {p.link.label} <Icon name="arrow" size={15} />
+            </a>
+          )}
+          <p className="personal__status">
+            <i aria-hidden="true" /> {p.status}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function Personal() {
   return (
     <>
       <PageHead eyebrow="Personal projects" title="Things I build for myself." lead="I build these to solve my own problems and to learn. They are separate from my company projects." />
       <div className="container page-body">
-        <ul className="personal">
-          {personalProjects.map((p, i) => (
-            <li key={p.id} className="stagger" style={{ "--i": i } as React.CSSProperties}>
-              <p className="personal__kind">{p.kind}</p>
-              <h2>{p.title}</h2>
-              <p>{p.d}</p>
-              <div className="pcard__tags">
-                {p.tags.map((t) => (
-                  <span key={t} className="tag">
-                    {t}
-                  </span>
-                ))}
-              </div>
-              {p.link && (
-                <a className="textlink" href={p.link.href} target="_blank" rel="noopener noreferrer">
-                  {p.link.label} <Icon name="arrow" size={15} />
-                </a>
-              )}
-              <p className="personal__status">
-                <i aria-hidden="true" /> {p.status}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <PersonalList />
       </div>
     </>
   );

@@ -35,7 +35,7 @@ Frequently edited content lives in `src/content/` — components read from these
 | File | What it controls |
 | --- | --- |
 | `site.ts` | Brand name, headline, navigation, social links, contact options |
-| `capabilities.ts` | The eight capabilities, which also fill the business contact dropdown, and the demo list |
+| `capabilities.ts` | The eight capabilities on the Tools page, which also fill the business contact dropdown, and the demo list |
 | `tools.ts` | The tools and workflow stages shown in the Technology workflow map |
 | `projects.ts` | The three company case studies |
 | `about.ts` | The About Me story and course milestones |

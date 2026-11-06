@@ -1,20 +1,24 @@
 # AGENTS.md — handoff guide for AI assistants (and humans)
 
 Read this before changing anything. It explains what this project is, where it lives, how it is
-built, deployed and secured, and the rules the owner cares about. Last updated: 6 Nov 2026.
+built, deployed and secured, and the rules the owner cares about. Last updated: 7 Nov 2026.
 
 ---
 
 ## 1. What this is
 
-**Cyber Panther — Finance & Automation** is the professional portfolio of **Rushi Makwana**, for recruiters and employers as well as businesses.
-Positioning: Finance | Accounting | Payroll Operations | Automation | Data Analytics. It is not a freelancer marketplace or AI agency site: no pricing, packages or hourly rates.
+**Cyber Panther** is the professional portfolio of **Rushi Makwana**, for recruiters and employers first. Rushi has no clients and is not looking for client work right now, so the site must not sell services.
+Positioning: Accountant | Financial Data Analyst | Financial Automation Specialist. It is not a freelancer marketplace or AI agency site: no pricing, packages or hourly rates.
 
-- Home headline: "Finance Expertise. Intelligent Automation. Real Business Impact." Main message: "Transforming Finance Operations Through Intelligent Automation."
-- The public portfolio contains ONLY three company case studies: MPR Checker, Auto Payroll Dashboard, Payroll AI Assistant. Never add private Claude Skills or other internal tools, and never invent projects.
+- Home headline: "Turning Financial Operations into Intelligent Systems." The name and roles appear above it.
+- The public portfolio contains ONLY three company case studies: Document Matcher (formerly MPR Checker), Auto Payroll Dashboard, Finance Operations Intelligence (formerly Payroll AI Assistant). Never add private Claude Skills or other internal tools, and never invent projects.
+- **Core message (owner's words, Nov 2026):** systems for daily manual work, done by the system, accurately and efficiently, under the owner's control.
+- **Keep projects short:** show what was built, why it is useful and why it is better. Do not show internal detail such as month types, step-by-step workflows, architecture, formulas or model versions. Long detail bores visitors, and the owner does not want the full project identity shown.
+- Every project has a label: In use, Prototype or Experiment (`stageInfo` in `content/projects.ts`). Only the owner can confirm a label.
+- "My Automation Impact" describes kinds of change. Add numbers only if the owner has measured and approved them.
 - **Plain language is required (owner's request, Nov 2026):** write so a non-technical person and a professional can both follow. Use everyday words first and explain a technical term the first time it appears.
 - **Ask Panther** (`src/content/askPanther.ts`, `src/sections/AskPanther.tsx`) is a rule-based site guide that runs in the browser with approved answers only. It is not an AI model and uses no API. Keep it honest: it says so when it has no answer.
-- Keep generic: portal and bank names, employer names, internal security configuration, margin formula, file names. Cyber Panther is the website identity. Do not use the name Blue Panther on this site.
+- Keep generic: portal and bank names, employer names, internal security configuration, margin formula, business rules, file names, table names, AI model versions. The owner's private handover files are for checking facts only and must never be copied here. Cyber Panther is the website identity. Do not use the name Blue Panther on this site.
 
 | Thing | Where |
 | --- | --- |
@@ -76,16 +80,19 @@ src/
 
 | Route | File | Content |
 | --- | --- | --- |
-| `#/` | `src/pages/Home.tsx` | Hero + compact dashboard, project cards, capabilities, demo tiles, two contact paths |
+| `#/` | `src/pages/Home.tsx` | Name, roles, headline, document-check picture (`sections/HeroMatch.tsx`), three starting points, featured projects, manual vs system, one node story (`content/stories.ts`, `components/NodeStory.tsx`), demo tiles, contact |
 | `#/about` | `pages/About.tsx`, `styles/about.css` | Scrolling personal story from `content/about.ts` (approved Concept C). No employers, dates or resume content |
-| `#/projects`, `#/projects/<id>` | `pages/Projects.tsx` | Case studies from `content/projects.ts`; diagrams in `components/Architecture.tsx` |
-| `#/capabilities`, `#/capabilities/<demo>` | `pages/Capabilities.tsx` | 8 capabilities + tabbed live demos |
-| `#/technology` | `pages/OtherPages.tsx` | Tool groups + workflow map |
+| `#/projects`, `#/projects/<id>` | `pages/Projects.tsx` | Short project pages from `content/projects.ts`: built, useful, better, demo |
+| `#/tools`, `#/tools/<demo>` | `pages/Tools.tsx` | Tabbed live demos + 8 capabilities |
+| `#/ai-lab` | `pages/AiLab.tsx` | Labelled AI work, how AI is used, chat demo |
+| `#/technology` | `pages/OtherPages.tsx` | Tool groups, technology node story, workflow map |
 | `#/security` | `pages/OtherPages.tsx` | Approach and principles. Do not disclose internal security configuration |
 | `#/personal` | `pages/OtherPages.tsx` | Synk, Just Go Fit, Compliance Copilot |
-| `#/contact/<opportunity or automation>/<topic>` | `sections/Contact.tsx` | Two-path form using the same `api/contact.ts` |
+| `#/contact/opportunity` | `sections/Contact.tsx` | Job form using `api/contact.ts`. The business path appears only through old `#/contact/automation` links |
 
-Old one-page links (`#contact`, `#services`, ...) are mapped to the new routes in `route.ts`.
+Main menu: Home, Projects, Tools, AI Lab, About Me, Contact. Technology, Security and Personal Projects are linked from the mobile menu, the footer and related pages.
+
+Old links keep working through `route.ts`: one-page links (`#contact`, `#services`, ...), `#/capabilities`, `#/projects/mpr-checker` and `#/projects/payroll-ai-assistant`.
 
 ## 6. Common edits
 
@@ -95,7 +102,8 @@ Old one-page links (`#contact`, `#services`, ...) are mapped to the new routes i
 | Case studies | `src/content/projects.ts` (demos in `src/sections/demos/`, data in `src/data/caseDemos.ts`) |
 | Capabilities and demo list | `src/content/capabilities.ts` |
 | About Me story and course milestones | `src/content/about.ts` |
-| Technology, approach, personal projects | `src/content/misc.ts` |
+| Technology, approach, personal projects, AI Lab items | `src/content/misc.ts` |
+| Home node stories | `src/content/stories.ts` |
 | Ask Panther answers | `src/content/askPanther.ts` (tests in `tests/askPanther.test.mjs`) |
 | Demo numbers | `src/data/*.ts` (keep totals consistent) |
 | Colours/spacing/type | `src/styles/tokens.css`; page layouts in `src/styles/pages.css` |
@@ -198,6 +206,7 @@ stronger spam protection); Resend test sender deliverability (verify a domain); 
 | `ea9530f` | Social share image + og/twitter tags (LinkedIn preview) |
 | `55988e3` | Folder tidy-up: removed generated `Cyber Panther.html` from the repo (now optional `npm run build:single`) |
 | (Nov 2026) | Upgrade merged from `v2`: eight views, three case studies, plain language, Ask Panther, About story |
+| (7 Nov 2026) | Job-first portfolio redesign: new menu, renamed projects, short project pages, AI Lab, internal detail removed |
 
 Also: an older copy of the site was published as a private claude.ai artifact (https://claude.ai/artifact/FYxQsXED1HtXmx85DRn2Jh). It is **stale** and its form cannot send — the Vercel URL is the real site.
 

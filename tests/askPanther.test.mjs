@@ -5,7 +5,11 @@ import { answers, fallback, findAnswer } from "../src/content/askPanther.ts";
 const expected = {
   "hello": "hello",
   "What has Rushi built?": "projects",
+  "What is Document Matcher?": "mpr",
   "What is MPR Checker?": "mpr",
+  "what is finance operations intelligence": "assistant",
+  "what is the payroll ai assistant": "assistant",
+  "what is the ai lab": "ai-lab",
   "how does attendance checking work": "mpr",
   "Is payroll data safe?": "safe",
   "What is OCR?": "term-ocr",
@@ -44,5 +48,5 @@ test("answers stay within what the public site may say", () => {
 });
 
 test("every link points to a page on this site", () => {
-  for (const a of [...answers, fallback]) if (a.link) assert.match(a.link.href, /^#\/(about|projects|capabilities|technology|security|personal|contact)(\/[a-z-]+)?$/, a.id);
+  for (const a of [...answers, fallback]) if (a.link) assert.match(a.link.href, /^#\/(about|projects|tools|ai-lab|technology|security|personal|contact)(\/[a-z-]+)?$/, a.id);
 });

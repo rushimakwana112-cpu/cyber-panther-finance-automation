@@ -124,7 +124,7 @@ export const stages: Stage[] = [
     n: "01",
     label: "Source data",
     what: "Where the numbers already are. The process only reads this data and does not change it.",
-    input: "Your current systems",
+    input: "Current systems",
     output: "Raw data",
     tools: [],
     sources: ["Accounting software", "Monthly Excel and CSV files", "Bank and payment statements"],

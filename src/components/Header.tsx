@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { nav } from "../content/site";
+import { moreNav, nav, navParent } from "../content/site";
 import { href, type PageId } from "../lib/route";
 import { Icon } from "./Icon";
 import { Logo } from "./Logo";
 
 export function Header({ page }: { page: PageId }) {
+  const current = navParent[page] ?? page;
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -31,7 +32,7 @@ export function Header({ page }: { page: PageId }) {
 
   // Close the mobile menu if the viewport grows past the breakpoint.
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1121px)");
+    const mq = window.matchMedia("(min-width: 901px)");
     const onChange = () => mq.matches && setOpen(false);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
@@ -41,12 +42,20 @@ export function Header({ page }: { page: PageId }) {
     <>
       <header className={`header ${scrolled || open ? "is-scrolled" : ""}`}>
         <div className="container header__inner">
-          <a href={href.page("home")} className="header__brand" aria-label="Cyber Panther home" onClick={() => setOpen(false)}>
+          <a
+            href={href.page("home")}
+            className="header__brand"
+            aria-label="Rushi Makwana, Cyber Panther: home"
+            onClick={() => {
+              setOpen(false);
+              if (page === "home") window.scrollTo(0, 0);
+            }}
+          >
             <Logo />
           </a>
           <nav className="header__nav" aria-label="Primary">
             {nav.map((item) => (
-              <a key={item.id} href={href.page(item.id)} className={page === item.id ? "is-active" : ""} aria-current={page === item.id ? "page" : undefined}>
+              <a key={item.id} href={href.page(item.id)} className={current === item.id ? "is-active" : ""} aria-current={page === item.id ? "page" : undefined} onClick={() => page === item.id && window.scrollTo(0, 0)}>
                 {item.label}
               </a>
             ))}
@@ -68,6 +77,12 @@ export function Header({ page }: { page: PageId }) {
         <nav aria-label="Mobile">
           {nav.map((item) => (
             <a key={item.id} href={href.page(item.id)} aria-current={page === item.id ? "page" : undefined} onClick={() => setOpen(false)}>
+              {item.label}
+            </a>
+          ))}
+          <p className="mobile-nav__more">More</p>
+          {moreNav.map((item) => (
+            <a key={item.id} className="mobile-nav__sub" href={href.page(item.id)} aria-current={page === item.id ? "page" : undefined} onClick={() => setOpen(false)}>
               {item.label}
             </a>
           ))}
