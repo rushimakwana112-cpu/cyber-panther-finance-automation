@@ -1,0 +1,595 @@
+/* Visual refinement: app previews, project cards, workflow, impact facts and the journey timeline.
+   Same tokens and palette as the rest of the site. Motion is short and switched off for reduced motion. */
+
+/* ---------- App previews ---------- */
+.apv {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(32, 197, 255, 0.08), transparent 60%),
+    rgba(8, 16, 27, 0.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-size: 0.72rem;
+}
+.apv__chrome {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-2);
+}
+.apv__chrome i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line-2);
+}
+.apv__chrome span {
+  margin-left: 6px;
+  font-weight: 500;
+}
+.apv__chrome em {
+  margin-left: auto;
+  color: var(--violet);
+  font: 500 0.6rem var(--mono);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.apv__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 132px;
+  padding: 12px;
+}
+.apv .mono {
+  font-family: var(--mono);
+}
+
+/* Document reader */
+.apv__docs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.apv__doc {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 36px;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  background: var(--surface-2);
+  color: var(--text-3);
+  font: 500 0.56rem var(--mono);
+}
+.apv__doc--scan {
+  border-style: dashed;
+}
+.apv__arrow {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line-2), var(--blue));
+}
+.apv__ref {
+  padding: 4px 8px;
+  border: 1px solid rgba(32, 197, 255, 0.35);
+  border-radius: 6px;
+  color: var(--blue);
+  font-size: 0.62rem;
+}
+.apv__rows li {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
+}
+.apv__pill {
+  font-size: 0.64rem;
+}
+.apv__pill--good {
+  color: var(--good);
+}
+.apv__pill--info {
+  color: var(--blue);
+}
+.apv__pill--warn {
+  color: var(--warn);
+}
+.apv__pill--bad {
+  color: var(--bad);
+}
+.apv__scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, transparent, rgba(32, 197, 255, 0.09), transparent);
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.pcard:hover .apv__scan,
+.pcard:focus-visible .apv__scan,
+.cs__headgrid .apv__scan {
+  animation: apvScan 2.4s var(--ease) infinite;
+}
+@keyframes apvScan {
+  to {
+    transform: translateY(260%);
+  }
+}
+
+/* Payroll control */
+.apv__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.apv__cards span {
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text-3);
+}
+.apv__cards b {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.apv__bar {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--blue) 72%, var(--line) 72%);
+}
+.apv__bar--warn {
+  background: linear-gradient(90deg, var(--warn) 18%, var(--line) 18%);
+}
+.apv__steps {
+  display: grid;
+  gap: 5px;
+}
+.apv__steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-2);
+}
+.apv__steps i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  transition: background 0.3s calc(var(--i) * 0.12s);
+}
+.pcard:hover .apv__steps i,
+.pcard:focus-visible .apv__steps i {
+  animation: apvStep 1.6s var(--ease) both;
+  animation-delay: calc(var(--i) * 0.14s);
+}
+@keyframes apvStep {
+  from {
+    background: transparent;
+  }
+}
+
+/* Chat */
+.apv__ask {
+  align-self: flex-end;
+  max-width: 85%;
+  padding: 6px 10px;
+  border-radius: 10px 10px 2px 10px;
+  background: var(--blue-dim);
+  color: var(--text);
+}
+.apv__answer {
+  display: grid;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px 10px 10px 2px;
+}
+.apv__hbar {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-2);
+}
+.apv__hbar i {
+  display: block;
+  width: var(--w);
+  min-width: 2px;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--violet));
+  transform-origin: left;
+}
+.pcard:hover .apv__hbar i,
+.pcard:focus-visible .apv__hbar i {
+  animation: apvGrow 0.9s var(--ease) both;
+}
+@keyframes apvGrow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ---------- Project cards ---------- */
+.pcard--app {
+  padding: 16px 16px 22px;
+}
+.pcard--app > :not(.apv) {
+  margin-inline: 10px;
+}
+.pcard--app .apv {
+  margin-bottom: 18px;
+}
+.pcard--app:hover .apv {
+  border-color: rgba(32, 197, 255, 0.35);
+}
+.pcard__key {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 14px;
+  color: var(--text-2);
+  font-size: 0.86rem;
+}
+.pcard__key b {
+  margin-bottom: 2px;
+  color: var(--text-3);
+  font: 500 0.66rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pcard__key span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pcard__key svg {
+  flex: none;
+  color: var(--blue);
+}
+.pcard__explore {
+  align-self: flex-start;
+  padding: 8px 14px;
+  margin-top: auto;
+  border: 1px solid rgba(32, 197, 255, 0.35);
+  border-radius: 999px;
+  transition:
+    background 0.25s,
+    border-color 0.25s;
+}
+.pcard .pcard__explore {
+  margin-top: 22px;
+}
+.pcard__key + .pcard__tags {
+  margin-bottom: auto;
+}
+.pcard:hover .pcard__explore {
+  border-color: var(--blue);
+  background: var(--blue-dim);
+}
+.pcard:hover .pcard__explore svg {
+  transform: translateX(3px);
+}
+.pcard__explore svg {
+  transition: transform 0.25s var(--ease);
+}
+
+/* ---------- Project page head ---------- */
+.cs__headgrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: start;
+  gap: clamp(24px, 4vw, 48px);
+  margin-top: 18px;
+}
+.cs__headgrid .cs__plainbox {
+  margin-top: 0;
+}
+.cs__headgrid .apv__body {
+  min-height: 170px;
+  font-size: 0.8rem;
+}
+.cs__try {
+  margin-top: 20px;
+}
+
+/* ---------- Automation workflow ---------- */
+.aflow__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.aflow__track::before,
+.aflow__track::after {
+  content: "";
+  position: absolute;
+  top: 46px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--line-2);
+}
+.aflow__track::after {
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  background-size: 30% 100%;
+  background-repeat: no-repeat;
+  animation: aflowRun 3.2s linear infinite;
+  opacity: 0.8;
+}
+@keyframes aflowRun {
+  from {
+    background-position: -30% 0;
+  }
+  to {
+    background-position: 130% 0;
+  }
+}
+.aflow__track li {
+  position: relative;
+  z-index: 1;
+}
+.aflow__track button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 4px 14px;
+  border-radius: var(--r);
+  color: var(--text-2);
+  text-align: center;
+  transition:
+    color 0.25s,
+    background 0.25s;
+}
+.aflow__track button:hover,
+.aflow__track .is-on button {
+  color: var(--text);
+  background: rgba(32, 197, 255, 0.05);
+}
+.aflow__n {
+  color: var(--text-3);
+  font-size: 0.7rem;
+}
+.aflow__dot {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--line-2);
+  border-radius: 50%;
+  background: var(--bg);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s,
+    background 0.3s;
+}
+.aflow__track .is-done .aflow__dot {
+  border-color: var(--blue);
+  background: var(--blue-dim);
+}
+.aflow__track .is-on .aflow__dot {
+  border-color: var(--blue);
+  background: var(--blue);
+  box-shadow: 0 0 0 6px rgba(32, 197, 255, 0.12), 0 0 18px rgba(32, 197, 255, 0.45);
+}
+.aflow__track li:last-child .is-on .aflow__dot,
+.aflow__track li:last-child button[aria-pressed="true"] .aflow__dot {
+  border-color: var(--purple);
+  background: var(--purple);
+  box-shadow: 0 0 0 6px var(--purple-dim), 0 0 18px rgba(168, 85, 247, 0.4);
+}
+.aflow__t {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.aflow__detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  min-height: 52px;
+  margin-top: 18px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--surface);
+  color: var(--text-2);
+}
+.aflow__detail strong {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* ---------- Impact facts ---------- */
+.ifacts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.ifacts li {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: linear-gradient(180deg, var(--surface), transparent);
+}
+.ifacts strong {
+  display: block;
+  color: var(--text);
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1;
+}
+.ifacts li:first-child strong {
+  color: var(--blue);
+}
+.ifacts span {
+  display: block;
+  margin-top: 10px;
+  color: var(--text);
+  font-weight: 500;
+}
+.ifacts p {
+  margin-top: 4px;
+  color: var(--text-3);
+  font-size: var(--fs-sm);
+}
+.ifacts__note {
+  margin-block: 12px 28px;
+  color: var(--text-3);
+  font-size: var(--fs-xs);
+}
+
+/* Before and after: the system side is the lit side */
+.versus > li > div:not(.versus__system) p {
+  color: var(--text-3);
+}
+.versus__system {
+  padding: 12px 16px;
+  border-left: 2px solid var(--blue);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  background: linear-gradient(90deg, var(--blue-dim), transparent);
+}
+.versus > li > svg {
+  color: var(--blue);
+}
+.reveal.is-visible .versus > li > svg {
+  animation: versusNudge 1.8s var(--ease) 0.6s both;
+}
+@keyframes versusNudge {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------- About: journey timeline ---------- */
+.ab-timeline {
+  position: relative;
+  justify-content: space-between;
+  gap: 4px;
+}
+.ab-timeline::before,
+.ab-timeline::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 6px;
+  right: 6px;
+  height: 1px;
+  background: var(--line-2);
+}
+.ab-timeline::after {
+  right: auto;
+  width: calc((100% - 12px) * var(--p, 0));
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  transition: width 0.8s var(--ease);
+}
+.ab-timeline button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0 0 4px;
+  color: var(--text-3);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color 0.4s;
+}
+.ab-timeline button:last-child {
+  align-items: flex-end;
+}
+.ab-timeline button:hover,
+.ab-timeline button.on {
+  color: var(--blue);
+}
+.ab-timeline button.done {
+  color: var(--text-2);
+}
+.ab-timeline i {
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: var(--bg);
+  transition:
+    background 0.4s,
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+.ab-timeline .done i {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+.ab-timeline .on i {
+  border-color: var(--blue);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 3px var(--blue), 0 0 12px rgba(32, 197, 255, 0.45);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .ifacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .aflow__track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 4px;
+  }
+  .aflow__track::before,
+  .aflow__track::after {
+    display: none;
+  }
+  .cs__headgrid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .aflow__track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ifacts li {
+    padding: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .apv__scan,
+  .pcard:hover .apv__scan,
+  .cs__headgrid .apv__scan,
+  .pcard:hover .apv__steps i,
+  .pcard:hover .apv__hbar i,
+  .aflow__track::after,
+  .reveal.is-visible .versus > li > svg {
+    animation: none;
+  }
+  .aflow__dot,
+  .ab-timeline::after,
+  .ab-timeline button,
+  .ab-timeline i,
+  .pcard__explore,
+  .pcard__explore svg {
+    transition: none;
+  }
+}

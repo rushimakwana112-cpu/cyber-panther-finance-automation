@@ -14,6 +14,10 @@ export const stageInfo: Record<ProjectStage, { label: string; d: string }> = {
 export type CaseStudy = {
   id: string;
   stage: ProjectStage;
+  /** The business problem in one line, for project cards. */
+  solves: string;
+  /** Three short key functions, for project cards. */
+  keyFunctions: string[];
   demo: "mpr" | "control" | "chat";
   title: string;
   tagline: string;
@@ -29,13 +33,15 @@ export type CaseStudy = {
 
 export const projects: CaseStudy[] = [
   {
-    id: "document-matcher",
+    id: "pdf-image-reader",
     stage: "in-use",
+    solves: "Documents that must be checked by hand against records.",
+    keyFunctions: ["Reads many PDFs and scans", "Compares with reference data", "Flags mismatches for a person"],
     demo: "mpr",
-    title: "Document Matcher",
-    tagline: "PDF & Image Data Extraction and Verification",
-    summary: "Reads PDF and image documents, compares them with system records and shows where they do not match.",
-    built: "A system that reads information from PDF and image documents, compares it with system records and shows where they do not match. It replaces checking every row by hand.",
+    title: "Smart PDF & Image Reader",
+    tagline: "Document Intelligence for Multiple PDFs & Images",
+    summary: "Reads many PDF and image documents in one run, extracts the information and checks it against reference data.",
+    built: "A document intelligence system: it reads many PDF and image documents in one run, extracts the information and compares it with reference data. It shows where they do not match, so nobody has to check every row by hand.",
     useful: ["Nobody has to compare every row by hand.", "People see only the items that need attention.", "Every result is saved in an Excel report."],
     better: [
       "Each page is read twice, and a value counts only when both reads agree.",
@@ -49,6 +55,8 @@ export const projects: CaseStudy[] = [
   {
     id: "auto-payroll-dashboard",
     stage: "in-use",
+    solves: "Many payroll files prepared by hand from the same data.",
+    keyFunctions: ["Bank transfer files", "Letters, prints and PDFs", "HR and PF checks"],
     demo: "control",
     title: "Auto Payroll Dashboard",
     tagline: "Payroll Work From One Control Screen",
@@ -67,6 +75,8 @@ export const projects: CaseStudy[] = [
   {
     id: "finance-operations-intelligence",
     stage: "in-use",
+    solves: "Finance questions that each need a database query or a new report.",
+    keyFunctions: ["Answers in everyday language", "Tables, charts and downloads", "Access set per person"],
     demo: "chat",
     title: "Finance Operations Intelligence",
     tagline: "AI-Powered Financial Analytics & Decision Support",

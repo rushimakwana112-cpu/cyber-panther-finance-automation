@@ -42,7 +42,7 @@ export function HeroMatch() {
       <p className="hmatch__note">
         <Icon name="shield" size={16} /> The system finds the problems. A person makes the decision.
       </p>
-      <a className="textlink" href={href.project("document-matcher")}>
+      <a className="textlink" href={href.project("pdf-image-reader")}>
         Try this demo <Icon name="arrow" size={15} />
       </a>
     </figure>

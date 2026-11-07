@@ -114,15 +114,29 @@ export function About() {
       </section>
 
       <div className="container ab-journey">
-        <div className="ab-stage" aria-hidden="true">
-          <Dots stage={stage} />
-          <div className="ab-cap">
-            {stageLabels.map((l, i) => (
-              <span key={l} className={i === stage ? "on" : ""}>
-                {l}
-              </span>
-            ))}
+        <div className="ab-stage">
+          <div aria-hidden="true">
+            <Dots stage={stage} />
           </div>
+          <nav className="ab-cap ab-timeline" aria-label="Journey timeline" style={{ "--p": stage / (stageLabels.length - 1) } as React.CSSProperties}>
+            {stageLabels.map((l, i) => (
+              <button
+                key={l}
+                type="button"
+                className={`${i === stage ? "on" : ""} ${i < stage ? "done" : ""}`}
+                aria-current={i === stage ? "step" : undefined}
+                onClick={() => {
+                  const target = items.current[story.findIndex((s) => s.stage === i)];
+                  if (!target) return;
+                  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                  window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.35, behavior: reduce ? "auto" : "smooth" });
+                }}
+              >
+                <i aria-hidden="true" />
+                {l}
+              </button>
+            ))}
+          </nav>
         </div>
 
         <div className="ab-path" ref={path}>

@@ -1,4 +1,4 @@
-// Fictional rows for the Document Matcher and Auto Payroll Dashboard demos.
+// Fictional rows for the Smart PDF & Image Reader and Auto Payroll Dashboard demos.
 // Every outcome and total in those demos is calculated from these rows.
 
 export type MprRow = { code: string; mpr: number | null; portal: number; readable: "Yes" | "Partly" | "No"; ticked: boolean };

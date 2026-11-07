@@ -5,7 +5,9 @@ import { answers, fallback, findAnswer } from "../src/content/askPanther.ts";
 const expected = {
   "hello": "hello",
   "What has Rushi built?": "projects",
+  "What is the PDF & Image Reader?": "mpr",
   "What is Document Matcher?": "mpr",
+  "tell me about document intelligence": "mpr",
   "What is MPR Checker?": "mpr",
   "what is finance operations intelligence": "assistant",
   "what is the payroll ai assistant": "assistant",

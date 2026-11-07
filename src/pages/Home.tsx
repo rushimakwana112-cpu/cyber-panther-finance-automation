@@ -1,3 +1,4 @@
+import { AppPreview } from "../components/AppPreview";
 import { Icon } from "../components/Icon";
 import { NodeStory } from "../components/NodeStory";
 import { Section } from "../components/Section";
@@ -7,14 +8,17 @@ import { projects } from "../content/projects";
 import { brand, manualVsSystem, startingPoints } from "../content/site";
 import { stories } from "../content/stories";
 import { href } from "../lib/route";
+import { AutomationFlow } from "../sections/AutomationFlow";
 import { HeroMatch } from "../sections/HeroMatch";
+import { ImpactFacts } from "../sections/ImpactFacts";
 
 export function ProjectCards() {
   return (
     <ul className="pcards">
       {projects.map((p, i) => (
         <li key={p.id} className="stagger" style={{ "--i": i } as React.CSSProperties}>
-          <a className="pcard" href={href.project(p.id)}>
+          <a className="pcard pcard--app" href={href.project(p.id)}>
+            <AppPreview kind={p.demo} />
             <span className="pcard__top">
               <span className="pcard__n num">0{i + 1}</span>
               <StageBadge stage={p.stage} />
@@ -23,11 +27,26 @@ export function ProjectCards() {
             <p className="pcard__tag">{p.tagline}</p>
             <p className="pcard__sum">{p.summary}</p>
             <p className="pcard__solves">
-              <b>Why it is better</b>
-              {p.better[0]}
+              <b>Problem solved</b>
+              {p.solves}
             </p>
-            <span className="pcard__go">
-              See what it does <Icon name="arrow" size={15} />
+            <span className="pcard__key">
+              <b>Key functions</b>
+              {p.keyFunctions.map((k) => (
+                <span key={k}>
+                  <Icon name="check" size={13} /> {k}
+                </span>
+              ))}
+            </span>
+            <span className="pcard__tags">
+              {p.stack.map((s) => (
+                <span key={s} className="tag">
+                  {s}
+                </span>
+              ))}
+            </span>
+            <span className="pcard__go pcard__explore">
+              Explore project <Icon name="arrow" size={15} />
             </span>
           </a>
         </li>
@@ -86,7 +105,13 @@ export function Home() {
         <ProjectCards />
       </Section>
 
+      <Section id="home-flow" eyebrow="Automation workflow" title="From raw Excel to bank files." intro="Hover over or tap a step to see what it does.">
+        <AutomationFlow />
+      </Section>
+
       <Section id="home-better" eyebrow="My Automation Impact" title="Daily manual work, done by a system." intro="This shows the kind of change my systems make.">
+        <ImpactFacts />
+        <p className="ifacts__note">These counts describe how the systems are built. They are not measured results.</p>
         <ul className="versus">
           {manualVsSystem.map((r, i) => (
             <li key={r.label} className="stagger" style={{ "--i": i } as React.CSSProperties}>

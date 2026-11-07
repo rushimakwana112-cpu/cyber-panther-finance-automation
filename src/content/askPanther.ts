@@ -7,7 +7,7 @@ export type Answer = { id: string; keys: string[]; text: string; link?: { href: 
 
 const contact = { href: "#/contact", label: "Go to Contact" };
 const projects = { href: "#/projects", label: "See the projects" };
-const mpr = { href: "#/projects/document-matcher", label: "Open Document Matcher" };
+const mpr = { href: "#/projects/pdf-image-reader", label: "Open Smart PDF & Image Reader" };
 const payroll = { href: "#/projects/auto-payroll-dashboard", label: "Open Auto Payroll Dashboard" };
 const assistant = { href: "#/projects/finance-operations-intelligence", label: "Open Finance Operations Intelligence" };
 const tech = { href: "#/technology", label: "See Technology" };
@@ -19,8 +19,8 @@ export const answers: Answer[] = [
   { id: "who", keys: ["who is rushi", "about rushi", "rushi", "about you", "kaun hai", "introduce"], text: "Rushi Makwana started in finance and accounting, became curious about repetitive work, and now builds practical automation systems, financial reporting tools and AI-powered applications.", link: { href: "#/about", label: "Go to About Me" } },
   { id: "background", keys: ["qualification", "education", "degree", "college", "course", "study", "studied", "learning", "ica", "ica institute", "learnbay", "certified industrial accountant", "certificate", "certification", "padhai"], text: "Rushi completed the Certified Industrial Accountant course at ICA Institute and is currently pursuing Data Analytics & Business Analytics with Applied AI at LearnBay.", link: { href: "#/about", label: "Go to About Me" } },
   { id: "work-history", keys: ["employment", "experience", "work history", "resume", "cv", "achievement", "employer", "which company"], text: "This website tells Rushi's professional story, not a resume. You can read it on About Me, or ask Rushi directly through the contact form.", link: { href: "#/about", label: "Go to About Me" } },
-  { id: "projects", keys: ["project", "portfolio", "what did", "what has", "built", "made", "banaya", "system"], text: "There are three main projects: Document Matcher compares documents with system records, Auto Payroll Dashboard runs payroll work from one screen, and Finance Operations Intelligence answers finance questions in everyday language.", link: projects },
-  { id: "mpr", keys: ["document matcher", "matcher", "mpr checker", "mpr", "discrepancy", "attendance", "absent", "attendance report", "human review", "human in the loop", "hazri"], text: "Document Matcher reads information from PDF and image documents and compares it with system records. If a document cannot be read or the numbers don't match, a person checks it.", link: mpr },
+  { id: "projects", keys: ["project", "portfolio", "what did", "what has", "built", "made", "banaya", "system"], text: "There are three main projects: the Smart PDF & Image Reader checks documents against reference data, Auto Payroll Dashboard runs payroll work from one screen, and Finance Operations Intelligence answers finance questions in everyday language.", link: projects },
+  { id: "mpr", keys: ["smart pdf", "pdf reader", "image reader", "pdf & image reader", "document intelligence", "document reader", "document matcher", "matcher", "mpr checker", "mpr", "discrepancy", "attendance", "absent", "attendance report", "human review", "human in the loop", "hazri"], text: "The Smart PDF & Image Reader reads many PDF and image documents, extracts the information and compares it with reference data. If a document cannot be read or the numbers don't match, a person checks it.", link: mpr },
   { id: "auto-payroll", keys: ["auto payroll", "payroll dashboard", "bank file", "salary file", "bank letter", "payroll letter", "mail merge", "one click", "control screen"], text: "Auto Payroll Dashboard brings payroll work into one control screen: bank files, letters, prints, checks and reports. It is built with Excel, Power Query and VBA.", link: payroll },
   { id: "assistant", keys: ["finance operations intelligence", "finance operations", "invoicing", "revenue", "expenses", "projection", "payroll ai", "ai assistant", "assistant", "chatbot", "chat bot", "hinglish", "ai", "artificial intelligence"], text: "Finance Operations Intelligence is a private chat assistant. People ask finance and payroll questions in everyday English or Hinglish. It stays inside the office and is not on the internet.", link: assistant },
   { id: "payroll", keys: ["payroll", "salary", "tankhwah"], text: "Two projects focus on payroll. Auto Payroll Dashboard runs payroll work from one screen, and Finance Operations Intelligence answers finance and payroll questions in everyday language.", link: projects },
@@ -56,7 +56,7 @@ export const fallback: Answer = {
   link: contact,
 };
 
-export const suggestions = ["What has Rushi built?", "What is Document Matcher?", "Is payroll data safe?", "What is OCR?", "How can I contact Rushi?"];
+export const suggestions = ["What has Rushi built?", "What is the PDF & Image Reader?", "Is payroll data safe?", "What is OCR?", "How can I contact Rushi?"];
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 

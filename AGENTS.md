@@ -11,7 +11,7 @@ built, deployed and secured, and the rules the owner cares about. Last updated: 
 Positioning: Accountant | Financial Data Analyst | Financial Automation Specialist. It is not a freelancer marketplace or AI agency site: no pricing, packages or hourly rates.
 
 - Home headline: "Turning Financial Operations into Intelligent Systems." The name and roles appear above it.
-- The public portfolio contains ONLY three company case studies: Document Matcher (formerly MPR Checker), Auto Payroll Dashboard, Finance Operations Intelligence (formerly Payroll AI Assistant). Never add private Claude Skills or other internal tools, and never invent projects.
+- The public portfolio contains ONLY three company case studies: Smart PDF & Image Reader (formerly Document Matcher, before that MPR Checker), Auto Payroll Dashboard, Finance Operations Intelligence (formerly Payroll AI Assistant). Never add private Claude Skills or other internal tools, and never invent projects.
 - **Core message (owner's words, Nov 2026):** systems for daily manual work, done by the system, accurately and efficiently, under the owner's control.
 - **Keep projects short:** show what was built, why it is useful and why it is better. Do not show internal detail such as month types, step-by-step workflows, architecture, formulas or model versions. Long detail bores visitors, and the owner does not want the full project identity shown.
 - Every project has a label: In use, Prototype or Experiment (`stageInfo` in `content/projects.ts`). Only the owner can confirm a label.
@@ -80,7 +80,7 @@ src/
 
 | Route | File | Content |
 | --- | --- | --- |
-| `#/` | `src/pages/Home.tsx` | Name, roles, headline, document-check picture (`sections/HeroMatch.tsx`), three starting points, featured projects, manual vs system, one node story (`content/stories.ts`, `components/NodeStory.tsx`), demo tiles, contact |
+| `#/` | `src/pages/Home.tsx` | Name, roles, headline, document-check picture (`sections/HeroMatch.tsx`), three starting points, project cards with app previews (`components/AppPreview.tsx`), automation workflow (`sections/AutomationFlow.tsx`), impact facts (`sections/ImpactFacts.tsx`, facts only, never results) and manual vs system, one node story (`content/stories.ts`, `components/NodeStory.tsx`), demo tiles, contact |
 | `#/about` | `pages/About.tsx`, `styles/about.css` | Scrolling personal story from `content/about.ts` (approved Concept C). No employers, dates or resume content |
 | `#/projects`, `#/projects/<id>` | `pages/Projects.tsx` | Short project pages from `content/projects.ts`: built, useful, better, demo |
 | `#/tools`, `#/tools/<demo>` | `pages/Tools.tsx` | Tabbed live demos + 8 capabilities |
@@ -92,7 +92,7 @@ src/
 
 Main menu: Home, Projects, Tools, AI Lab, About Me, Contact. Technology, Security and Personal Projects are linked from the mobile menu, the footer and related pages.
 
-Old links keep working through `route.ts`: one-page links (`#contact`, `#services`, ...), `#/capabilities`, `#/projects/mpr-checker` and `#/projects/payroll-ai-assistant`.
+Old links keep working through `route.ts`: one-page links (`#contact`, `#services`, ...), `#/capabilities`, `#/projects/mpr-checker`, `#/projects/document-matcher` and `#/projects/payroll-ai-assistant`.
 
 ## 6. Common edits
 
@@ -122,7 +122,7 @@ npm run build:single   # optional single-file copy → dist/cyber-panther.html
 npm run preview        # serve dist/ on :4173 with production security headers
 ```
 
-**Deploy (manual — GitHub auto-deploy is NOT connected):**
+**Deploy:** GitHub auto-deploy appears to be connected (7 Nov 2026: a push to `main` went live before the CLI deploy), so every push to `main` goes live. Ask the owner before pushing. The manual command still works:
 ```bash
 git push origin main
 npx vercel@63.1.2 deploy --prod --yes      # needs `npx vercel@63.1.2 login` once per machine

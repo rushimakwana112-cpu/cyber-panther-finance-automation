@@ -8,6 +8,7 @@ import "./styles/sections.css";
 import "./styles/pages.css";
 import "./styles/about.css";
 import "./styles/portfolio.css";
+import "./styles/visual.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

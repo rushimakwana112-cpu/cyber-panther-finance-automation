@@ -113,10 +113,10 @@ export const labItems: { title: string; stage: ProjectStage; d: string; link: { 
     link: { href: "#/projects/finance-operations-intelligence", label: "See what it does" },
   },
   {
-    title: "Document Matcher: AI tested, not used",
+    title: "Smart PDF & Image Reader: AI tested, not used",
     stage: "in-use",
     d: "I tested AI models for reading documents. A simpler method without AI was more accurate, so I kept the simpler method.",
-    link: { href: "#/projects/document-matcher", label: "See what it does" },
+    link: { href: "#/projects/pdf-image-reader", label: "See what it does" },
   },
   {
     title: "Payroll & Labour Compliance Copilot",

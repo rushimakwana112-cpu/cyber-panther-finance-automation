@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { AppPreview } from "../components/AppPreview";
 import { DemoTag } from "../components/DemoTag";
 import { Icon } from "../components/Icon";
 import { PageHead } from "../components/PageHead";
@@ -75,16 +76,27 @@ function ProjectDetail({ id }: { id: string }) {
     <article>
       <PageHead eyebrow="Company project" title={p.title} lead={p.tagline}>
         <StageBadge stage={p.stage} />
-        <div className="cs__plainbox">
-          <strong>What I built</strong>
-          <p>{p.built}</p>
-        </div>
-        <div className="pcard__tags">
-          {p.stack.map((s) => (
-            <span key={s} className="tag">
-              {s}
-            </span>
-          ))}
+        <div className="cs__headgrid">
+          <div>
+            <div className="cs__plainbox">
+              <strong>What I built</strong>
+              <p>{p.built}</p>
+            </div>
+            <div className="pcard__tags">
+              {p.stack.map((s) => (
+                <span key={s} className="tag">
+                  {s}
+                </span>
+              ))}
+            </div>
+            <a className="btn btn--primary cs__try" href="#try-demo" onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("try-demo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}>
+              Try the demo <Icon name="arrow" size={16} />
+            </a>
+          </div>
+          <AppPreview kind={p.demo} />
         </div>
       </PageHead>
 
@@ -94,7 +106,7 @@ function ProjectDetail({ id }: { id: string }) {
           <Checks title="Why it is better" items={p.better} />
         </div>
 
-        <div className="cs__block cs__demo">
+        <div className="cs__block cs__demo" id="try-demo">
           <h2>Try it yourself</h2>
           <p className="cs__sub">{p.demoNote}</p>
           {p.demo === "chat" && <DemoTag>Demo · made-up data</DemoTag>}

@@ -18,7 +18,7 @@ export const capabilities: Capability[] = [
   { id: "finance-workflow", title: "Finance workflow automation", icon: "flow", d: "Turning repeated finance tasks into a process that runs the same way every time.", demo: "refresh" },
   { id: "data-analysis", title: "Financial data analysis", icon: "chart", d: "Turning financial data into summaries, comparisons and trends that are easy to understand.", demo: "dashboard" },
   { id: "sql-reporting", title: "SQL-based reporting", icon: "database", d: "Getting the right information out of a database and into a report that can be used again.", demo: "sql" },
-  { id: "document-processing", title: "Document processing", icon: "file", d: "Reading PDFs and scanned documents, and turning them into data that can be checked.", project: "document-matcher" },
+  { id: "document-processing", title: "Document processing", icon: "file", d: "Reading PDFs and scanned documents, and turning them into data that can be checked.", project: "pdf-image-reader" },
   { id: "reconciliation", title: "Financial reconciliation", icon: "ledger", d: "Comparing records from different places and showing where they do not match.", demo: "cleaning" },
   { id: "business-intelligence", title: "Business intelligence", icon: "insight", d: "Showing profit, work-order and trend information that helps answer business questions.", demo: "margin" },
   { id: "local-ai", title: "Local AI assistants", icon: "shield", d: "Private chat assistants that answer from business data, with the AI running on a local computer.", project: "finance-operations-intelligence" },

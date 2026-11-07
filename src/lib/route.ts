@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // Small hash router. Hash routes need no server or vercel.json change, and every view has its own
-// link. Format: #/page/param/sub, e.g. #/projects/document-matcher or #/contact/automation/sql-reporting.
+// link. Format: #/page/param/sub, e.g. #/projects/pdf-image-reader or #/contact/automation/sql-reporting.
 
 export type PageId = "home" | "about" | "projects" | "tools" | "ai-lab" | "technology" | "security" | "personal" | "contact";
 export type Route = { page: PageId; param?: string; sub?: string };
@@ -24,7 +24,8 @@ const legacy: Record<string, string> = {
 /** Pages and projects that changed name. Links already shared keep working. */
 const renamedPages: Record<string, string> = { capabilities: "tools" };
 const renamedProjects: Record<string, string> = {
-  "mpr-checker": "document-matcher",
+  "mpr-checker": "pdf-image-reader",
+  "document-matcher": "pdf-image-reader",
   "payroll-ai-assistant": "finance-operations-intelligence",
 };
 
