@@ -9,6 +9,15 @@ export const brand = {
   lead: "I build systems for daily manual finance work, so the work gets done by the system, accurately and efficiently, and stays under my control.",
 };
 
+/** The growth path in the home hero. Stages come from the About story; the last one is where I am now. */
+export const growthPath = {
+  stages: ["Finance & accounting", "Excel automation", "Data & analytics", "Automation & applied AI"],
+  tools: ["Excel", "Power Query", "VBA", "SQL", "Python", "Tally Prime"],
+};
+
+/** Confirmed credential shown under the hero (from the About story). */
+export const credential = { name: "Certified Industrial Accountant", institute: "ICA Institute" };
+
 /** The three ways into the site, shown on the home page. */
 export const startingPoints: { n: string; title: string; d: string; to: PageId }[] = [
   { n: "01", title: "Explore My Projects", d: "What I built, why it is useful and why it is better.", to: "projects" },
