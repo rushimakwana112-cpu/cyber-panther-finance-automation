@@ -80,7 +80,7 @@ src/
 
 | Route | File | Content |
 | --- | --- | --- |
-| `#/` | `src/pages/Home.tsx` | Name, roles, headline, document-check picture (`sections/HeroMatch.tsx`), three starting points, project cards with app previews (`components/AppPreview.tsx`), automation workflow (`sections/AutomationFlow.tsx`), impact facts (`sections/ImpactFacts.tsx`, facts only, never results) and manual vs system, one node story (`content/stories.ts`, `components/NodeStory.tsx`), demo tiles, contact |
+| `#/` | `src/pages/Home.tsx` | Open-to-jobs line, role pills, headline, growth path picture (`sections/GrowthPath.tsx`, stages in `content/site.ts`, no figures), credential strip, project cards with app previews (`components/AppPreview.tsx`) and benefits, automation workflow (`sections/AutomationFlow.tsx`), impact facts (`sections/ImpactFacts.tsx`, facts only, never results) and manual vs system, one node story (`content/stories.ts`, `components/NodeStory.tsx`), three starting points, demo tiles, hiring call to action |
 | `#/about` | `pages/About.tsx`, `styles/about.css` | Scrolling personal story from `content/about.ts` (approved Concept C). No employers, dates or resume content |
 | `#/projects`, `#/projects/<id>` | `pages/Projects.tsx` | Short project pages from `content/projects.ts`: built, useful, better, demo |
 | `#/tools`, `#/tools/<demo>` | `pages/Tools.tsx` | Tabbed live demos + 8 capabilities |
@@ -207,6 +207,7 @@ stronger spam protection); Resend test sender deliverability (verify a domain); 
 | `55988e3` | Folder tidy-up: removed generated `Cyber Panther.html` from the repo (now optional `npm run build:single`) |
 | (Nov 2026) | Upgrade merged from `v2`: eight views, three case studies, plain language, Ask Panther, About story |
 | (7 Nov 2026) | Job-first portfolio redesign: new menu, renamed projects, short project pages, AI Lab, internal detail removed |
+| (8 Nov 2026) | Home "growth" redesign: growth path hero, credential strip, benefit-led project cards, comparison table, hiring call to action |
 
 Also: an older copy of the site was published as a private claude.ai artifact (https://claude.ai/artifact/FYxQsXED1HtXmx85DRn2Jh). It is **stale** and its form cannot send — the Vercel URL is the real site.
 
