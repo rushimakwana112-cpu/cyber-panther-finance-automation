@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Footer } from "./components/Footer";
+import { LockCursor } from "./components/LockCursor";
 import { Header } from "./components/Header";
 import { pageTitles } from "./content/site";
 import { useRoute, type Route } from "./lib/route";
@@ -72,6 +73,7 @@ export function App() {
       </main>
       <Footer />
       <AskPanther />
+      <LockCursor />
     </>
   );
 }

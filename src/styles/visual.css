@@ -593,3 +593,119 @@
     transition: none;
   }
 }
+
+/* ---------- Lock-on cursor (components/LockCursor.tsx) ----------
+   The normal cursor is hidden only while the lock-on cursor is showing (class lc-on on <html>).
+   Typing fields keep their normal text cursor. */
+html.lc-on,
+html.lc-on * {
+  cursor: none !important;
+}
+html.lc :is(input, textarea, [contenteditable='true']) {
+  cursor: text !important;
+}
+html.lc select {
+  cursor: default !important;
+}
+.lcur {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+html.lc-on .lcur {
+  opacity: 1;
+}
+.lcur__box,
+.lcur__dot,
+.lcur__ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.lcur__box {
+  width: 26px;
+  height: 26px;
+}
+.lcur__box i {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 0 solid var(--blue);
+  transition: border-color 0.25s, width 0.25s, height 0.25s;
+}
+.lcur__box i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-width: 1.8px 0 0 1.8px;
+}
+.lcur__box i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-width: 1.8px 1.8px 0 0;
+}
+.lcur__box i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 1.8px 1.8px;
+}
+.lcur__box i:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  border-width: 0 1.8px 1.8px 0;
+}
+.lcur__box.is-locked i {
+  width: 12px;
+  height: 12px;
+  border-color: var(--purple);
+}
+.lcur__dot {
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 8px rgba(32, 197, 255, 0.7);
+}
+.lcur__ripple {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  opacity: 0;
+}
+.lcur__ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--blue);
+  border-radius: 50%;
+}
+.lcur__ripple.is-on {
+  animation: lcRipple 0.55s var(--ease) forwards;
+}
+@keyframes lcRipple {
+  from {
+    opacity: 0.9;
+    scale: 0.3;
+  }
+  to {
+    opacity: 0;
+    scale: 1.4;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .lcur {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lcur,
+  .lcur__box i {
+    transition: none;
+  }
+  .lcur__ripple {
+    display: none;
+  }
+}
