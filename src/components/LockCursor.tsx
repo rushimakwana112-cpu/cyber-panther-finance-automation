@@ -67,11 +67,8 @@ export function LockCursor() {
       if (!frame) frame = requestAnimationFrame(tick);
     };
 
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse") return;
-      x = e.clientX;
-      y = e.clientY;
-      const el = e.target instanceof Element ? e.target : null;
+    // Decide what the cursor should do for the element under the mouse.
+    const pick = (el: Element | null) => {
       const typing = !!el?.closest(TYPING);
       const next = typing ? null : (el?.closest(TARGETS) ?? null);
       if (!visible) {
@@ -85,6 +82,23 @@ export function LockCursor() {
       }
       wake();
     };
+
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      x = e.clientX;
+      y = e.clientY;
+      pick(e.target instanceof Element ? e.target : null);
+    };
+
+    // Scrolling or a page change moves the content under a still mouse, so check again what is under it.
+    let queued = 0;
+    const recheck = () => {
+      if (!visible || queued) return;
+      queued = requestAnimationFrame(() => {
+        queued = 0;
+        pick(document.elementFromPoint(x, y));
+      });
+    };
     const onDown = (e: PointerEvent) => {
       if (e.pointerType !== "mouse" || !visible || calm.matches) return;
       r.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
@@ -93,12 +107,13 @@ export function LockCursor() {
       r.classList.add("is-on");
     };
     const onLeave = () => show(false);
-    const onScroll = () => target && wake();
 
     root.classList.add("lc");
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerdown", onDown, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // Capture catches scrolling inside boxes too, such as wide tables.
+    window.addEventListener("scroll", recheck, { passive: true, capture: true });
+    window.addEventListener("hashchange", recheck);
     document.documentElement.addEventListener("mouseleave", onLeave);
     window.addEventListener("blur", onLeave);
 
@@ -111,10 +126,12 @@ export function LockCursor() {
 
     return () => {
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(queued);
       root.classList.remove("lc", "lc-on");
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", recheck, { capture: true });
+      window.removeEventListener("hashchange", recheck);
       document.documentElement.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("blur", onLeave);
       fine.removeEventListener("change", stop);
